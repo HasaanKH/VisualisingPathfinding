@@ -1,0 +1,17 @@
+*{
+    color: white
+}
+
+nav{
+    display: flex;
+    justify-content: center;
+    background-color: #252525;
+}
+
+.wrapper {
+    margin: 2rem;
+}
+
+button, select, input{
+    background-color: #bb86fc
+}

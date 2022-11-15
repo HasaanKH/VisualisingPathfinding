@@ -12,16 +12,22 @@
   <body>
     <main>
       <nav>
-        <form action="" id="algorithmSelection">
-          <label for="algorithm">Choose an algorithm.</label>
-          <select name="algorithm" id="algorithm">
-            <option value="Dijkstra">Dijkstra's</option>
-            <option value="A*">A*</option>
-          </select>
-          <input type="submit" value="Select" />
-        </form>
-        <button class="startButton" onclick="start()">Start</button>
-        <button class="refreshButton" onclick="start()">Refresh</button>
+        <div class="wrapper">
+          <form action="" id="algorithmSelection">
+            <label for="algorithm">Choose an algorithm: </label>
+            <select name="algorithm" id="algorithm">
+              <option value="Dijkstra">Dijkstra's</option>
+              <option value="A*">A*</option>
+            </select>
+            <input type="submit" value="Select" />
+          </form>
+        </div>
+        <div class="wrapper">
+          <button class="startButton" onclick="start()">Start</button>
+        </div>
+        <div class="wrapper">
+          <button class="refreshButton" onclick="start()">Refresh</button>
+        </div>
       </nav>
       <div class="Grid"></div>
     </main>
