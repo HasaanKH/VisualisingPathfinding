@@ -1,32 +1,34 @@
-//Creating a node factory function
-function createNode(row, col, weight) {
+function createNode (row, column, weight) { //returns node
     var node = document.createElement("div");
-    node.setAttribute("class", "node");
     node.setAttribute("row", row);
-    node.setAttribute("column", col);
+    node.setAttribute("column", column);
     node.setAttribute("weight", weight);
+    node.classList.add("gridElement");
     return node;
 }
 
-//returns a random weight between 0 and 100.
-function randomWeight(){
-    if (document.querySelector('.weightButton').checked == true)
-        {return Math.ceil(Math.random() * 100);}
-    else
-    {
-        return 1;
-    }
 
+function createGrid () { 
+    var grid = document.getElementById('Grid');
+    var col = []; 
+    var 
+    for (x = 1; x <= 25; x ++ ){
+        for (y = 1; y<= 10; y++) {
+            var tempNode = createNode (y, x, 1);
+            grid.appendChild(tempNode);
+        }
+    }
+}
+
+function setNodes () { 
+    const nodeList = document.getElementById('Grid').childNodes;
+    console.log(nodeList[0]);
+    nodeList[0].style.backgroundColor = 'red';
+    nodeList[249].style.backgroundColor = 'red';
 }
 
 
-function createGrid() {
-    var grid = document.getElementsByClassName("Grid");
-    grid.innerHtml = "";
-    for (row = 1; row <= grid.getAttribute("grid-template-rows");row++){
-        for (col = 1; col <= grid.getAttribute("grid-template-column");col++){
-            temp = createNode(row, col, randomWeight())
-            grid.appendChild(temp);
-        }
-    }
+window.onload = () => {
+    createGrid();
+    setNodes();
 }
