@@ -1,11 +1,15 @@
 *{
-    color: white
+    color: black;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box ;
+
 }
 
 nav{
     display: flex;
     justify-content: center;
-    background-color: #252525;
+    background-color: white;
 }
 
 .wrapper {
@@ -16,11 +20,25 @@ button, select, input{
     background-color: #bb86fc
 }
 
-.Grid {
-    display: grid;
-    grid-template-columns: repeat(10, 50px);
-    grid-template-rows: repeat(10, 50px);
-    grid-row-gap: 10px;
-    grid-column-gap: 10px;
+#Grid {
+    display: inline-grid;
+    grid-template-columns: repeat(25, 40px);
+    grid-template-rows: repeat(10, 40px);
+    grid-row-gap: 2px;
+    grid-column-gap: 2px;
     justify-content: center;
+    align-content: center;
+    background-color: #252525;
+    border: #252525 10px;
+    height: 70vh;
+    width: 100vw;
+   
+}
+.gridElement {
+    background-color: white;
+}
+
+.wallEditing:hover {
+    background-color: black;
+
 }

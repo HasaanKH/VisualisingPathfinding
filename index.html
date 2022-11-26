@@ -26,10 +26,19 @@
           <button class="startButton" onclick="start()">Start</button>
         </div>
         <div class="wrapper">
-          <button class="refreshButton" onclick="start()">Refresh</button>
+          <button id="wallButton" onclick="wallEdit()">Create walls</button>
+        </div>
+        <div class="wrapper">
+          <button class="refreshButton" onclick="refresh()">Refresh</button>
+        </div>
+        <div class="wrapper">
+          <form>
+            <label for="weightButton">Weight: </label>
+            <input type="checkbox" class="weightButton" name="weightButton" />
+          </form>
         </div>
       </nav>
-      <div class="Grid"></div>
+      <div id="Grid"></div>
     </main>
   </body>
 </html>
