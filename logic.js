@@ -3,7 +3,7 @@ var grid;
 var nodeList;
 var gridY = 10;
 var gridX = 25;
-var adjList = new map();
+var adjList = new Map();
 
 function createNode (row, column, heuristic, phase) { //returns node
     var node = document.createElement("div");

@@ -42,3 +42,11 @@ button, select, input{
     background-color: black;
 
 }
+
+.calcNode {
+    background-color: yellow;
+}
+
+.addedNode {
+    background-color: #bb86fc;
+}
