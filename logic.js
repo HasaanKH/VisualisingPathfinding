@@ -24,62 +24,53 @@ function createNode (row, column, heuristic, phase) { //returns node
     return node;
 }
 
-function createMinHeap(arr) 
-{ //insert, delete and update.
-    minHeap = []; //stores [node, distance], where distance is the distance from start node.
-    this.insert = function() {
-        for (i = 0; i < arr.length; i++)
-        {   
-            if (arr[i].sig == 1) {minHeap.push = [arr[i], 1];}
-            else { minHeap.push = [arr[i], Infinity];} //default.
-            let condition = false;
-            while (condition = false) {
-                if (minHeap[floor(i/2)] > minHeap[i]){
-                    temp = minHeap[floor(i/2)];
-                    minHeap[floor(i/2)] = minHeap[i];
-                    minHeap[i] = temp;
-                }
-                else {
-                    condition = true;
-                }
+class MinHeap {
+    constructor() {
+        this.minHeap = [null];
+    }
+
+    delete() { 
+        return this.minHeap[0];
+    }
+
+    insert(ele) { //ele is an array consisting of a [node, distance]
+        this.minHeap.push(ele);
+        let condition = false;
+        if (this.minHeap.length > 0) 
+        {
+            index = this.minHeap.length;
+        }
+        while (condition === false) {
+            if (this.minHeap[floor(index/2)][1] > ele[1]) {
+                temp = this.minHeap[floor(index/2)] ;
+                this.minHeap[floor(index/2)] = ele;
+                this.minHeap[index] = temp;
             }
+            else{condition = true;}
         }
     }
-    this.update = function(node, val) {
-        var count = -1;
-        for (const i of minHeap) {
+
+    update(ele) {
+        let index = -1;
+        for (x of this.minHeap) {
             count ++;
-            if (i[0] == node) {
-                i[1] = val;
-                condition = false;
-                while (condition = false) {
-                    if (minHeap[floor(count/2)] > minHeap[count]){
-                        temp = minHeap[floor(count/2)];
-                        minHeap[floor(count/2)] = minHeap[count];
-                        minHeap[count] = temp;
-                    }
-                    else {
-                        condition = true;
-                    }
-                }
+            if (x[0] === ele[0]) {
+                x[1] = ele[1];
+            }
         }
+        let condition = false;
+        while (condition === false) {
+            if (this.minHeap[floor(index/2)][1] > ele[1]) {
+                temp = this.minHeap[floor(index/2)] ;
+                this.minHeap[floor(index/2)] = ele;
+                this.minHeap[index] = temp;
+            }
+            else{condition = true;}
+        }
+        
     }
 
-    }
-    this.delete = function() {
-        let temp = minHeap.pop();
-        minHeap.pop;
-        for(i = 0; i < ceil(minHeap.length/2); i++) {
-            if(minHeap[2*i] > minHeap[2*i + 1]) {
-                minHeap[i] = minHeap[2*i];
-            }
-            else{
-                minHeap[i] = minHeap[2*i + 1];
-            }
-        }
-    }
 }
-
 
 function createGrid () {  //appends x axis wise
     grid = document.getElementById('Grid');
