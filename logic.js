@@ -1,6 +1,9 @@
 var weightsArray = [];
 var grid;
 var nodeList;
+var gridY = 10;
+var gridX = 25;
+var adjList = new map();
 
 function createNode (row, column, heuristic, phase) { //returns node
     var node = document.createElement("div");
@@ -21,7 +24,8 @@ function createNode (row, column, heuristic, phase) { //returns node
     return node;
 }
 
-function createMinHeap(arr) { //insert, delete and update.
+function createMinHeap(arr) 
+{ //insert, delete and update.
     minHeap = []; //stores [node, distance], where distance is the distance from start node.
     this.insert = function() {
         for (i = 0; i < arr.length; i++)
@@ -59,6 +63,7 @@ function createMinHeap(arr) { //insert, delete and update.
                     }
                 }
         }
+    }
 
     }
     this.delete = function() {
@@ -94,7 +99,6 @@ function setNodes () {
     nodeList[0].style.backgroundColor = 'red';
     nodeList[0].sig = 1;
     nodeList[249].style.backgroundColor = 'red';
-    nodeList[249].sig = 1;
 }
 
 var click = 0;
@@ -112,6 +116,7 @@ function wallEdit() {
         }
     }
 }
+
 
 
 
@@ -142,6 +147,16 @@ function idtoNum(node) {
     return [parseInt(stringArray[0]), parseInt(stringArray[2])]
 }
 
+function adjListBuilder () {
+    for (y = 0; y < gridY - 1; y++){
+        for(x = 0; x < gridX - 1; x++){
+            let currentNode = document.getElementById('y'+' '+'x');
+            let neighbourX = document.getElementById('y'+' '+ toString(x + 1));
+            let neighbourY = document.getElementById(toString(y + 1)+' '+'x');
+            adjList.set(currentNode, [[neighbourX, 1], [neighbourY, 1]]); //node, distance - default value 1, subject to change.
+        }
+    }
+}
 
 
 window.onload = () => {
