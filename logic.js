@@ -58,17 +58,17 @@ class MinHeap { //stores arrays [node, distance, parent], starts 0 indexed.
         return temp;
     }
 
-    insert(ele) { //ele is an array consisting of a [node, distance]
+    insert(ele) { //ele is an array consisting of a [node, distance, parent]
         this.minHeap.push(ele);
         let condition = false;
         if (this.minHeap.length > 0) 
         {
-            index = this.minHeap.length;
+            index = this.minHeap.length - 1;
         }
         while (condition === false) {
-            if (this.minHeap[floor(index/2)][1] > ele[1]) {
-                temp = this.minHeap[floor(index/2)] ;
-                this.minHeap[floor(index/2)] = ele;
+            if (this.minHeap[floor(index - 1/2)][1] > ele[1]) {
+                temp = this.minHeap[floor((index - 1)/2)] ;
+                this.minHeap[floor((index - 1)/2)] = ele;
                 this.minHeap[index] = temp;
             }
             else{condition = true;}
