@@ -33,7 +33,7 @@ class MinHeap { //stores arrays [node, distance, parent], starts 0 indexed.
         temp = this.minHeap[0];
         this.minHeap[0] = null;
         let index;
-        if (this.minHeap[1][2] > this.minHeap[2][2]) {
+        if (this.minHeap[1][1] > this.minHeap[2][1]) {
             this.minHeap[0] = this.minHeap[2];
             this.minHeap[2] = null;
             index = 2;
@@ -45,11 +45,11 @@ class MinHeap { //stores arrays [node, distance, parent], starts 0 indexed.
         }
         for (i = index; i < this.minHeap.length; i ++) 
         {
-            if (this.minHeap[2*i + 1][2] > this.minHeap[2*i+2][2] && this.minHeap[floor((i-1)/2)] == null) {
+            if (this.minHeap[2*i + 1][1] > this.minHeap[2*i+2][1] && this.minHeap[floor((i-1)/2)] == null) {
                 this.minHeap[floor((i-1)/2)] =  this.minHeap[2*i+2];
                 this.minHeap[2*i+2] = null;
             }
-            else if (this.minHeap[2*i + 1][2] < this.minHeap[2*i+2][2] && this.minHeap[floor((i-1)/2)] == null) {
+            else if (this.minHeap[2*i + 1][1] < this.minHeap[2*i+2][1] && this.minHeap[floor((i-1)/2)] == null) {
                 this.minHeap[floor((i-1)/2)] =  this.minHeap[2*i+1];
                 this.minHeap[2*i+1] = null;
             }
@@ -66,7 +66,7 @@ class MinHeap { //stores arrays [node, distance, parent], starts 0 indexed.
             index = this.minHeap.length - 1;
         }
         while (condition === false) {
-            if (this.minHeap[floor(index - 1/2)][1] > ele[1]) {
+            if (this.minHeap[floor[(index - 1/2)][1]] > ele[1]) {
                 temp = this.minHeap[floor((index - 1)/2)] ;
                 this.minHeap[floor((index - 1)/2)] = ele;
                 this.minHeap[index] = temp;
@@ -189,10 +189,10 @@ function dijkstraAlgo() {
     let visitedNodes = [null]; //consists of [node, distance, parent], except start node.
     for (i = 0; i < childNodes.length; i++) { //creating minHeap
         if (i ===0) {
-            minHeap.insert([childNodes[i], 0]);
+            minHeap.insert([childNodes[i], 0, null]);
         }
         else{
-            minHeap.insert([childNodes[i], Infinity])
+            minHeap.insert([childNodes[i], Infinity, null])
         }
     }
     while(visitedNodes.length <= gridX*gridY) {
