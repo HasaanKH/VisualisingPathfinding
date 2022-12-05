@@ -85,9 +85,9 @@ class MinHeap { //stores arrays [node, distance, parent], starts 0 indexed.
         }
         let condition = false;
         while (condition === false) {
-            if (this.minHeap[floor(index/2)][1] > ele[1]) {
-                temp = this.minHeap[floor(index/2)] ;
-                this.minHeap[floor(index/2)] = ele;
+            if (this.minHeap[floor((index-1)/2)][1] > ele[1]) {
+                temp = this.minHeap[floor((index-1)/2)] ;
+                this.minHeap[floor((index-1)/2)] = ele;
                 this.minHeap[index] = temp;
             }
             else{condition = true;}
