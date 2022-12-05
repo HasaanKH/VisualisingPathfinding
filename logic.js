@@ -24,7 +24,7 @@ function createNode (row, column, heuristic, phase) { //returns node
     return node;
 }
 
-class MinHeap { //stores arrays [node, distance], starts 0 indexed.
+class MinHeap { //stores arrays [node, distance, parent], starts 0 indexed.
     constructor() {
         this.minHeap = [null];
     }
@@ -33,7 +33,7 @@ class MinHeap { //stores arrays [node, distance], starts 0 indexed.
         temp = this.minHeap[0];
         this.minHeap[0] = null;
         let index;
-        if (this.minHeap[1] > this.minHeap[2]) {
+        if (this.minHeap[1][2] > this.minHeap[2][2]) {
             this.minHeap[0] = this.minHeap[2];
             this.minHeap[2] = null;
             index = 2;
@@ -45,17 +45,17 @@ class MinHeap { //stores arrays [node, distance], starts 0 indexed.
         }
         for (i = index; i < this.minHeap.length; i ++) 
         {
-            if (this.minHeap[2*i + 1] > this.minHeap[2*i+2] && this.minHeap[floor((i-1)/2)] == null) {
+            if (this.minHeap[2*i + 1][2] > this.minHeap[2*i+2][2] && this.minHeap[floor((i-1)/2)] == null) {
                 this.minHeap[floor((i-1)/2)] =  this.minHeap[2*i+2];
                 this.minHeap[2*i+2] = null;
             }
-            else if (this.minHeap[2*i + 1] < this.minHeap[2*i+2] && this.minHeap[floor((i-1)/2)] == null) {
+            else if (this.minHeap[2*i + 1][2] < this.minHeap[2*i+2][2] && this.minHeap[floor((i-1)/2)] == null) {
                 this.minHeap[floor((i-1)/2)] =  this.minHeap[2*i+1];
                 this.minHeap[2*i+1] = null;
             }
             else {continue;}
         } 
-        return this.minHeap[0];
+        return temp;
     }
 
     insert(ele) { //ele is an array consisting of a [node, distance]
@@ -93,6 +93,15 @@ class MinHeap { //stores arrays [node, distance], starts 0 indexed.
             else{condition = true;}
         }
         
+    }
+
+    search(key) {
+        for (x of this.minHeap) {
+            if (key === x[0]){
+                return x[1]
+            }
+        }
+        return null;
     }
 
 }
@@ -175,7 +184,29 @@ function adjListBuilder () {
 }
 
 function dijkstraAlgo() {
-    let minHeap = new MinHeap
+    let childNodes = grid.childNodes;
+    let minHeap = new MinHeap();
+    let visitedNodes = [null]; //consists of [node, distance, parent], except start node.
+    for (i = 0; i < childNodes.length; i++) { //creating minHeap
+        if (i ===0) {
+            minHeap.insert([childNodes[i], 0]);
+        }
+        else{
+            minHeap.insert([childNodes[i], Infinity])
+        }
+    }
+    while(visitedNodes.length <= gridX*gridY) {
+        let temp = minHeap.delete();
+        minHeap.delete();
+        visitedNodes.push(temp);
+        for (node of adjList.get(temp[0])) {
+            heapDistance = minHeap.search(node[0]);
+            if(heapDistance > temp[1] + node[1]) {
+                minHeap.update([node[0], temp[1] + node[1]]);
+                visitedNodes.push([node[0], temp[1] + node[1], temp[0] ]);
+            }
+        }
+    }
 }
 
 
