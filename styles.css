@@ -44,9 +44,12 @@ button, select, input{
 }
 
 .calcNode {
-    background-color: yellow;
+    animation-name: addedNode;
+    animation-duration: 5s;
 }
 
 .addedNode {
-    background-color: #bb86fc;
+    animation-name: calcNode;
+    animation-duration: 5s;
+    
 }
