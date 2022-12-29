@@ -1,6 +1,7 @@
 import { MinHeap } from "./MinheapClass.js";
 import { adjList, distances, visitNodes, nodeList } from "./logic.js";
 var path;
+var speed;
 
 export function dijkstraAlgo() {
     // Create a MinHeap to store the nodes and their corresponding
@@ -60,9 +61,12 @@ export function dijkstraAlgo() {
 }
 
 function VisualColor() {
+    speed = 75; //slow: 100, medium: 75; fast; 50
     var counter = 1000;
     for(const node of visitNodes) {
-        counter = counter + 10;
-        setTimeout(() => {node.style.backgroundColor = 'purple';} , counter);
+        if (node != nodeList[249]){
+            counter = counter + speed;
+            setTimeout(() => {node.style.backgroundColor = 'purple';} , counter);
+        }
     } 
 }

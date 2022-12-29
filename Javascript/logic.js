@@ -1,13 +1,16 @@
 import { MinHeap } from './MinheapClass.js';
 import { dijkstraAlgo } from './DijkstraAlgo.js';
-var weightsArray = [];
-var grid;
-var gridY = 10;
-var gridX = 25;
+
 export var nodeList;
 export var distances = new Map(); //map of node to distance.
 export var visitNodes = [];
 export var adjList = new Map();
+
+var weightsArray = [];
+var grid;
+var gridY = 10;
+var gridX = 25;
+
 window.dijkstraAlgo = dijkstraAlgo; //necessary for onclick events
 
 
@@ -65,32 +68,6 @@ function wallEdit() {
     }
 }
 
-
-
-
-function lowestValuefromMap(map , finalmap) {
-    let array = Array.from(map, ([name, value]) => ([ name, value ]));
-    let finalList = Array.from(finalmap, ([name, value]) => ([ name, value ]));
-    let minKey = array[0];
-    minKey = minKey[0];
-    let minValue = 1000;
-    for (let i = 0; i < array.length; i ++)
-    {
-        if (array[i][1] < minValue && !(finalList.includes(array[i]))){
-            minValue = array[i][1];
-            minKey = array[i][0];
-        }
-    }
-    return [minKey, minValue];
-}
-
-  
-
-function idtoNum(node) {
-    var str = node.id;
-    var stringArray = str.split(/(\s+)/);
-    return [parseInt(stringArray[0]), parseInt(stringArray[2])]
-}
 
 function adjListBuilder () {
     for (let y = 1; y < gridY; y++){
