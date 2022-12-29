@@ -4,6 +4,7 @@ var nodeList;
 var gridY = 10;
 var gridX = 25;
 var adjList = new Map();
+var path
 
 function createNode (row, column, heuristic, phase) { //returns node
     var node = document.createElement("div");
@@ -24,86 +25,142 @@ function createNode (row, column, heuristic, phase) { //returns node
     return node;
 }
 
-class MinHeap { //stores arrays [node, distance, parent], starts 0 indexed.
+
+
+
+class MinHeap 
+{
     constructor() {
-        this.minHeap = [null];
+        this.heap = [];
     }
 
-    delete() { 
-        temp = this.minHeap[0];
-        this.minHeap[0] = null;
-        let index;
-        if (this.minHeap[1][1] > this.minHeap[2][1]) {
-            this.minHeap[0] = this.minHeap[2];
-            this.minHeap[2] = null;
-            index = 2;
-        }
-        else{
-            this.minHeap[0] = this.minHeap[1];
-            this.minHeap[1] = null;
-            index = 1;
-        }
-        for (i = index; i < this.minHeap.length; i ++) 
-        {
-            if (this.minHeap[2*i + 1][1] > this.minHeap[2*i+2][1] && this.minHeap[floor((i-1)/2)] == null) {
-                this.minHeap[floor((i-1)/2)] =  this.minHeap[2*i+2];
-                this.minHeap[2*i+2] = null;
-            }
-            else if (this.minHeap[2*i + 1][1] < this.minHeap[2*i+2][1] && this.minHeap[floor((i-1)/2)] == null) {
-                this.minHeap[floor((i-1)/2)] =  this.minHeap[2*i+1];
-                this.minHeap[2*i+1] = null;
-            }
-            else {continue;}
-        } 
-        return temp;
+    insert(node, weight, parent) {
+        this.heap.push({node, weight, parent});
+        this.bubbleUp(this.heap.length - 1);
     }
-
-    insert(ele) { //ele is an array consisting of a [node, distance, parent]
-        this.minHeap.push(ele);
-        let condition = false;
-        if (this.minHeap.length > 0) 
-        {
-            index = this.minHeap.length - 1;
-        }
-        while (condition === false) {
-            if (this.minHeap[floor[(index - 1/2)][1]] > ele[1]) {
-                temp = this.minHeap[floor((index - 1)/2)] ;
-                this.minHeap[floor((index - 1)/2)] = ele;
-                this.minHeap[index] = temp;
+    update(node, weight, parent){
+        for (let i = 0; i < this.heap.length; i++){
+            if (this.heap[i].node == node){
+                this.heap[i].weight = weight;
+                console.log(this.heap[i].weight);
+                this.heap[i].parent = parent;
+                this.bubbleUp(i); //new value is smaller, so bubble up.
+                break;
             }
-            else{condition = true;}
         }
     }
 
-    update(ele) {
-        let index = -1;
-        for (x of this.minHeap) {
-            count ++;
-            if (x[0] === ele[0]) {
-                x[1] = ele[1];
-            }
+    bubbleUp(index) {  
+        while (index > 0) {
+        let parentIndex = Math.floor((index - 1) / 2);
+        if (this.heap[parentIndex].weight > this.heap[index].weight) {
+            let temp = this.heap[parentIndex];
+            this.heap[parentIndex] = this.heap[index];
+            this.heap[index] = temp;
+            index = parentIndex;
+        } else {
+            break;
         }
-        let condition = false;
-        while (condition === false) {
-            if (this.minHeap[floor((index-1)/2)][1] > ele[1]) {
-                temp = this.minHeap[floor((index-1)/2)] ;
-                this.minHeap[floor((index-1)/2)] = ele;
-                this.minHeap[index] = temp;
-            }
-            else{condition = true;}
         }
-        
     }
 
-    search(key) {
-        for (x of this.minHeap) {
-            if (key === x[0]){
-                return x[1]
+    extractMin() {
+        let min = this.heap[0]; //min is the first element
+        this.heap[0] = this.heap[this.heap.length - 1]; //last element is now first
+        this.heap.splice(this.heap.length - 1); //removes last element
+        this.bubbleDown(); //reorders the heap
+        return min;
+    }
+    bubbleDown() {
+        let index = 0;
+        while (index < this.heap.length) {
+            let leftChildIndex = index * 2 + 1;
+            let rightChildIndex = index * 2 + 2;
+            let minIndex = index;
+            if (leftChildIndex < this.heap.length && this.heap[leftChildIndex].weight < this.heap[minIndex].weight) {
+                minIndex = leftChildIndex;
+            }
+            if (rightChildIndex < this.heap.length && this.heap[rightChildIndex].weight < this.heap[minIndex].weight) {
+                minIndex = rightChildIndex;
+            }
+            if (minIndex !== index) { //if the minIndex is not the index, swap the two.
+                let temp = this.heap[minIndex];
+                this.heap[minIndex] = this.heap[index];
+                this.heap[index] = temp;
+                index = minIndex;
+            } else {
+                break;
             }
         }
-        return null;
+    }
+}
+    
+var distances = new Map(); //map of node to distance.
+function dijkstraAlgo() {
+    // Create a MinHeap to store the nodes and their corresponding
+    // distances from the start node
+    var minHeap = new MinHeap();
+    var graph = adjList;
+    var startNode = nodeList[0];
+
+    // Initialize the distances of all nodes to infinity, except
+    // for the start node, which has a distance of 0
+    for (const [node, neighbours] of graph.entries()) {
+        distances.set(node, Number.POSITIVE_INFINITY);
+    }
+    distances.set(startNode, 0); //start node has a distance of 0.
+
+    // Add all the nodes to the min heap
+    for (const [node, distance] of distances.entries()) {
+        minHeap.insert(node, distance, null);
     }
 
+    // Create a map to store the previous node for each node
+    // in the shortest path from the start node
+    const previousNodes = new Map();
+
+    // While the min heap is not empty, extract the minimum element
+    // from the heap and update the distances of its neighbours
+    while (minHeap.heap.length > 0) {
+        // Extract the minimum element from the min heap
+        const min = minHeap.extractMin();
+        // Update the distances of the neighbours
+        const neighbours = graph.get(min.node);
+        for (const [neighbour, weight] of neighbours) { //needs to be fixed.
+            // Calculate the new distance to the neighbour
+            var newDistance = Infinity;
+            if(neighbour.style.backgroundColor != 'black')
+            {
+            newDistance = distances.get(min.node) + weight;
+            if (!visitNodes.includes(neighbour)){
+                visitNodes.push(neighbour);
+            }
+            }
+            // If the new distance is shorter than the current distance,
+            // update the distance and the previous node for the neighbour
+            if (newDistance < distances.get(neighbour)) {
+                minHeap.update(neighbour, newDistance, min.node) //needs work
+                distances.set(neighbour, newDistance);
+                previousNodes.set(neighbour, min.node);
+            }
+        }
+
+    }
+
+    path = {distances, previousNodes};
+    console.log(path);
+    VisualColor();
+    return path;
+}
+var visitNodes = [];
+
+function VisualColor() {
+    var counter = 1000;
+    for(const node of visitNodes) {
+        counter = counter + 10;
+        setTimeout(() => {node.style.backgroundColor = 'purple';} , counter);
+    }
+    
 }
 
 function createGrid () {  //appends x axis wise
@@ -127,7 +184,6 @@ function setNodes () {
 }
 
 var click = 0;
-
 function wallEdit() {
     click ++;
     let children = document.getElementById("Grid").childNodes;
@@ -145,13 +201,11 @@ function wallEdit() {
 
 
 
-function lowestValuefromMap(map , finalmap) { //needs work
+function lowestValuefromMap(map , finalmap) {
     let array = Array.from(map, ([name, value]) => ([ name, value ]));
     let finalList = Array.from(finalmap, ([name, value]) => ([ name, value ]));
-    console.log(finalList[0][1]);
     let minKey = array[0];
     minKey = minKey[0];
-    console.log(minKey);
     let minValue = 1000;
     for (i = 0; i < array.length; i ++)
     {
@@ -160,7 +214,6 @@ function lowestValuefromMap(map , finalmap) { //needs work
             minKey = array[i][0];
         }
     }
-    console.log(minKey);
     return [minKey, minValue];
 }
 
@@ -173,46 +226,32 @@ function idtoNum(node) {
 }
 
 function adjListBuilder () {
-    for (y = 0; y < gridY - 1; y++){
-        for(x = 0; x < gridX - 1; x++){
-            let currentNode = document.getElementById('y'+' '+'x');
-            let neighbourX = document.getElementById('y'+' '+ toString(x + 1));
-            let neighbourY = document.getElementById(toString(y + 1)+' '+'x');
+    for (y = 1; y < gridY; y++){
+        for(x = 1; x < gridX; x++){
+            let currentNode = document.getElementById(y.toString()+' '+x.toString());
+            let neighbourX = document.getElementById(y.toString()+' '+ (x+1).toString());
+            let neighbourY = document.getElementById((y+1).toString()+' '+ x.toString());
             adjList.set(currentNode, [[neighbourX, 1], [neighbourY, 1]]); //node, distance - default value 1, subject to change.
         }
     }
-}
-
-function dijkstraAlgo() {
-    let childNodes = grid.childNodes;
-    let minHeap = new MinHeap();
-    let visitedNodes = [null]; //consists of [node, distance, parent], except start node.
-    for (i = 0; i < childNodes.length; i++) { //creating minHeap
-        if (i ===0) {
-            minHeap.insert([childNodes[i], 0, null]);
-        }
-        else{
-            minHeap.insert([childNodes[i], Infinity, null])
-        }
+    for (x=1; x<gridX; x++) {
+        let currentNode = document.getElementById('10'+' '+x.toString());
+        adjList.set(currentNode, []); 
     }
-    while(visitedNodes.length <= gridX*gridY) {
-        let temp = minHeap.delete();
-        minHeap.delete();
-        visitedNodes.push(temp);
-        for (node of adjList.get(temp[0])) {
-            heapDistance = minHeap.search(node[0]);
-            if(heapDistance > temp[1] + node[1]) {
-                minHeap.update([node[0], temp[1] + node[1]]);
-                visitedNodes.push([node[0], temp[1] + node[1], temp[0] ]);
-            }
-        }
+    for(y=1; y<gridY; y++) {
+        let currentNode = document.getElementById(y.toString()+' '+'25');
+        adjList.set(currentNode, []); 
     }
+    adjList.set(document.getElementById('9'+' '+'25'), [[document.getElementById('10'+' '+'25'), 1]]);
+    adjList.set(document.getElementById('10'+' '+'24'), [[document.getElementById('10'+' '+'25'), 1]]);
+    adjList.set(document.getElementById('10'+' '+'25'), []);
 }
 
 
 window.onload = () => {
     createGrid();
     setNodes();
+    adjListBuilder();
 }
 
 
