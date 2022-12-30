@@ -1,13 +1,11 @@
-import { MinHeap } from './MinheapClass.js';
 import { dijkstraAlgo } from './DijkstraAlgo.js';
-import { createNode } from './nodeFactoryfunc.js';
+import { setNodes, createGrid } from './boardCreation.js';
 
-export var nodeList;
 export var distances = new Map(); //map of node to distance.
 export var adjList = new Map();
 
-var weightsArray = [];
-var grid;
+
+
 var gridY = 10;
 var gridX = 25;
 
@@ -15,25 +13,6 @@ window.dijkstraAlgo = dijkstraAlgo; //necessary for onclick events
 window.wallEdit = wallEdit;
 
 
-function createGrid () {  //appends x axis wise
-    grid = document.getElementById('Grid');
-    let workingArray = [];
-    for (var y = 1; y <= 10; y ++ ){
-        for (var x = 1; x<= 25; x++) {
-            var tempNode = createNode (y, x, 1, 1);
-            grid.appendChild(tempNode);
-            workingArray.push(tempNode);
-        }
-        weightsArray.push(workingArray);
-    }
-}
-
-function setNodes () { 
-    nodeList = document.getElementById('Grid').childNodes;
-    nodeList[0].style.backgroundColor = 'red';
-    nodeList[0].sig = 1;
-    nodeList[249].style.backgroundColor = 'red';
-}
 
 var click = 0;
 function wallEdit() {
