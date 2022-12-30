@@ -3,7 +3,7 @@ import { adjList} from "./main.js";
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
 export var animEnd = true; //bool that dictates whether init anim is finished.
 export function setanimEnd(value) {animEnd = value;}
-var speed = 20; //slow: 75, medium: 50, fast; 25, developer: 5.
+var speed = 5; //slow: 75, medium: 50, fast; 25, developer: 5.
 //these need to be refreshed when, the refresh button is pressed.
 var finalPath;
 var previousNodes;

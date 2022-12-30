@@ -81,8 +81,8 @@ export function setNodes () {  //sets start and end nodes.
     nodeList = document.getElementById('Grid').childNodes;
     nodeList[nodeStartId].style.backgroundColor = 'red'; //var changed
     nodeList[nodeStartId].setAttribute('data-node', 'Start'); //var changed
-    nodeList[249].setAttribute('data-node', 'End');
-    nodeList[249].style.backgroundColor = 'red';
+    nodeList[nodeEndId].setAttribute('data-node', 'End');
+    nodeList[nodeEndId].style.backgroundColor = 'red';
 }
 
 export function createGrid () {  //appends x axis wise
