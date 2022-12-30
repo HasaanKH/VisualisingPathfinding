@@ -17,13 +17,12 @@ function refresh() {
     for (let i = 249; i > -1; i--) { //only works in reverse?
         childrenNodes[i].remove();
     }
+    adjList = new Map(); //need to clear variables before refreshing.
     setanimEnd(true);
     setClick;
     createGrid();
     setNodes();
     adjListBuilder();
-    
-    
 }
 
 function adjListBuilder () {
@@ -41,17 +40,20 @@ function adjListBuilder () {
             );
             let neighbourList = [];
             for(let i = 0; i < currentNeighbour.length; i++) {
-               neighbourList.push([currentNeighbour[i], 1])
+               neighbourList.push([currentNeighbour[i], Number(currentNeighbour[i].getAttribute('heuristic'))])
             }
             adjList.set(currentNode, neighbourList);
+            
         }
     }
+    console.log(adjList);
 }
 
 function start() {
     let algoSelection = document.getElementById('algorithm').value;
     if (algoSelection === "Dijkstra"){
-        dijkstraAlgo();
+        let distance = dijkstraAlgo();
+        document.getElementsByTagName('nav')[0].innerHTML = distance;
     }
 }
 
