@@ -1,5 +1,6 @@
 import { MinHeap } from "./MinheapClass.js";
-import { adjList, distances, nodeList } from "./logic.js";
+import { adjList, distances } from "./main.js";
+import { nodeList } from "./boardCreation.js";
 var visitNodes = [];
 var calculatedNodes = [];
 var path;
@@ -60,7 +61,6 @@ export function dijkstraAlgo() {
     }
 
     path = {distances, previousNodes, calculatedNodes, visitNodes};
-    console.log(path);
     VisualColor(visitNodes);
     return path;
 }
