@@ -70,25 +70,25 @@ function wallEdit() {
 
 
 function adjListBuilder () {
-    for (let y = 1; y < gridY; y++){
-        for(let x = 1; x < gridX; x++){
-            let currentNode = document.getElementById(y.toString()+' '+x.toString());
-            let neighbourX = document.getElementById(y.toString()+' '+ (x+1).toString());
-            let neighbourY = document.getElementById((y+1).toString()+' '+ x.toString());
-            adjList.set(currentNode, [[neighbourX, 1], [neighbourY, 1]]); //node, distance - default value 1, subject to change.
+    for (let y = 1; y < gridY + 1; y++){
+        for(let x = 1; x < gridX + 1; x++){
+            let currentNode = document.getElementById(y +' '+x);
+            let currentNeighbour = [];
+            currentNeighbour.push(document.getElementById(y+1 + ' ' + x.toString()));
+            currentNeighbour.push(document.getElementById(y-1 + ' ' + x.toString()));
+            currentNeighbour.push(document.getElementById(y + ' ' + (x-1).toString()));
+            currentNeighbour.push(document.getElementById(y + ' ' + (x+1).toString()));
+            currentNeighbour = currentNeighbour.filter(element => {
+                return element !== undefined && element !== null;
+              }
+            );
+            let neighbourList = [];
+            for(let i = 0; i < currentNeighbour.length; i++) {
+               neighbourList.push([currentNeighbour[i], 1])
+            }
+            adjList.set(currentNode, neighbourList);
         }
     }
-    for (let x=1; x<gridX; x++) {
-        let currentNode = document.getElementById('10'+' '+x.toString());
-        adjList.set(currentNode, []); 
-    }
-    for(let y=1; y<gridY; y++) {
-        let currentNode = document.getElementById(y.toString()+' '+'25');
-        adjList.set(currentNode, []); 
-    }
-    adjList.set(document.getElementById('9'+' '+'25'), [[document.getElementById('10'+' '+'25'), 1]]);
-    adjList.set(document.getElementById('10'+' '+'24'), [[document.getElementById('10'+' '+'25'), 1]]);
-    adjList.set(document.getElementById('10'+' '+'25'), []);
 }
 
 
