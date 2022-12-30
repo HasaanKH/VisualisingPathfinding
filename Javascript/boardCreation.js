@@ -1,4 +1,5 @@
 export var nodeList;
+export var randomStart = Math.floor(Math.random()*150);
 
 var grid; //holds all the nodes, the board.
 
@@ -23,8 +24,8 @@ function createNode (row, column, heuristic, phase) { //returns node
 
 export function setNodes () {  //sets start and end nodes.
     nodeList = document.getElementById('Grid').childNodes;
-    nodeList[0].style.backgroundColor = 'red';
-    nodeList[0].setAttribute('data-node', 'Start');
+    nodeList[randomStart].style.backgroundColor = 'red'; //var changed
+    nodeList[randomStart].setAttribute('data-node', 'Start'); //var changed
     nodeList[249].setAttribute('data-node', 'End');
     nodeList[249].style.backgroundColor = 'red';
 }

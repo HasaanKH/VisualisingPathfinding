@@ -1,10 +1,10 @@
 import { MinHeap } from "./MinheapClass.js";
 import { adjList, distances } from "./main.js";
-import { nodeList } from "./boardCreation.js";
+import { nodeList, randomStart} from "./boardCreation.js";
 var visitNodes = [];
 var calculatedNodes = [];
 var path;
-var speed = 20; //slow: 100, medium: 75; fast; 50
+var speed = 75; //slow: 100, medium: 75; fast; 50
 var finalPath;
 var previousNodes;
 var intervalId;
@@ -14,7 +14,7 @@ export function dijkstraAlgo() {
     // distances from the start node
     var minHeap = new MinHeap();
     var graph = adjList;
-    var startNode = nodeList[0];
+    var startNode = nodeList[randomStart];
 
     // Initialize the distances of all nodes to infinity, except
     // for the start node, which has a distance of 0
@@ -71,18 +71,18 @@ export function dijkstraAlgo() {
 }
 
 function VisualColor(iterable, callback) {
-    var counter = 1000;
+    var counter = 0;
     for(const node of iterable) {
-        if (node != nodeList[249] && node != nodeList[0] && distances.get(node) != Infinity){
+        if (node != nodeList[249] && node != nodeList[randomStart] && distances.get(node) != Infinity){ //randomstart changed
             counter = counter + speed;
             setTimeout(() => {node.classList.add('visited');} , counter);
         }
     } 
-    intervalId = setInterval(() => { //solves async problem
+    intervalId = setInterval(() => { //solves async problem of final path loading before the end of first anim.
         if(visitNodes[248].classList.contains('visited')){
             callback(document.querySelector('[data-node = "End"]'), finalPath, previousNodes, VisualiseFP)
         }
-    },2000)   
+    },500)   
 }
 
 function FindFP (endNode, finalPath, previousNodes, callback) {
@@ -94,7 +94,7 @@ function FindFP (endNode, finalPath, previousNodes, callback) {
 }
 
 function VisualiseFP(Fp){
-    var counter = 1000;
+    var counter = 0;
     for(let i = 1; i < Fp.length-1; i++) {
         counter = counter + speed;
         setTimeout(() => {Fp[i].classList.add('finalPath');} , counter);
