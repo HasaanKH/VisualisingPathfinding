@@ -86,7 +86,14 @@ export function createGrid () {  //appends x axis wise
     grid = document.getElementById('Grid');
     for (var y = 1; y <= 10; y ++ ){
         for (var x = 1; x<= 25; x++) {
-            var tempNode = createNode (y, x, 1, 1);
+            let num = 1;
+            if (document.getElementById('weightButton').checked){
+                num = Math.floor(Math.random() * 100);
+            }
+            var tempNode = createNode (y, x, num, 1);
+            if(document.getElementById('weightButton').checked) {
+                tempNode.innerHTML = num;
+            }
             grid.appendChild(tempNode);
         }
     }
