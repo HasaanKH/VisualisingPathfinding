@@ -1,11 +1,13 @@
-import { gridX, gridY } from "./main.js";
 import { animEnd } from "./DijkstraAlgo.js";
 export var nodeList;
 export var nodeStartId = 0; //choose the location of the start node.
-export var nodeEndId = 249;
 var editSigNodes = false; //checks whether sig nodes can be moved, true is yes.
 var nodeOrder; //whether the node is start or end for changing data-node.
 var click = 0; //tracks whether wall editing is active if mod 2 == 1, its active.
+var gridComputedStyle = window.getComputedStyle(document.getElementById('Grid'));
+const gridY = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
+const gridX = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
+export var nodeEndId = gridX * gridY -1;
 export function setClick() {
     click = 0;
 }
@@ -96,14 +98,15 @@ export function setNodes () {  //sets start and end nodes.
     nodeList = document.getElementById('Grid').childNodes;
     nodeList[nodeStartId].style.backgroundColor = 'red'; //var changed
     nodeList[nodeStartId].setAttribute('data-node', 'Start'); //var changed
+    console.log(nodeEndId);
     nodeList[nodeEndId].setAttribute('data-node', 'End');
     nodeList[nodeEndId].style.backgroundColor = 'red';
 }
 
 export function createGrid () {  //appends x axis wise
     grid = document.getElementById('Grid');
-    for (var y = 1; y <= 10; y ++ ){
-        for (var x = 1; x<= 25; x++) {
+    for (var y = 1; y <= gridY; y ++ ){
+        for (var x = 1; x<= gridX; x++) {
             let num = 1;
             if (document.getElementById('weightButton').checked){
                 num = Math.floor(Math.random() * 100);
@@ -120,7 +123,7 @@ export function createGrid () {  //appends x axis wise
 export function wallEdit() { 
     click ++;
     let children = document.getElementById("Grid").childNodes;
-    for (let i = 0; i <= 249; i++) {
+    for (let i = 0; i <= gridX * gridY - 1; i++) {
         let tempNode = children[i];
         if (click % 2 === 1 && animEnd){
             tempNode.classList.add("wallEditing");

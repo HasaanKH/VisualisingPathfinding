@@ -5,8 +5,9 @@ import { aStarAlgo } from './AstarAlgo.js';
 
 export var adjList;
 
-export var gridY = 10;
-export var gridX = 25;
+var gridComputedStyle = window.getComputedStyle(document.getElementById('Grid'));
+export const gridY = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
+export const gridX = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
 
 window.wallEdit = wallEdit; //necessary for html onclick events, DO NOT TOUCH!!
 window.start = start;   //necessary for html onclick events, DO NOT TOUCH!!
@@ -15,7 +16,7 @@ window.refresh = refresh;
 
 function refresh() {
     let childrenNodes = document.getElementById('Grid').childNodes;
-    for (let i = 249; i > -1; i--) { //only works in reverse?
+    for (let i = gridX * gridY - 1; i > -1; i--) { //only works in reverse?
         childrenNodes[i].remove();
     }
     try{
