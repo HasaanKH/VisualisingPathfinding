@@ -52,7 +52,6 @@ function createNode (row, column, heuristic, phase) { //returns node
             else {
                 nodeEndId = gridX * (row - 1) + column - 1;
             }
-            console.log(nodeStartId);
         }
     }
     )

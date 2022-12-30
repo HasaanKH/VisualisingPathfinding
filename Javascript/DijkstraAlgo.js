@@ -48,10 +48,10 @@ export function dijkstraAlgo() {
             var newDistance = Infinity;
             if(neighbour.style.backgroundColor != 'black')
             {
-            newDistance = distances.get(min.node) + weight;
-            if (!visitNodes.includes(neighbour)){
-                visitNodes.push(neighbour);
-            }
+                newDistance = distances.get(min.node) + weight;
+                if (!visitNodes.includes(neighbour) && newDistance !== Infinity){
+                    visitNodes.push(neighbour);
+                }
             }
             // If the new distance is shorter than the current distance,
             // update the distance and the previous node for the neighbour
@@ -79,7 +79,9 @@ function VisualColor(iterable, callback) {
         }
     } 
     intervalId = setInterval(() => { //solves async problem of final path loading before the end of first anim.
-        if(visitNodes[248].classList.contains('visited')){
+        let i = visitNodes.length - 2;
+        console.log(visitNodes);
+        if(visitNodes[i].classList.contains('visited')){
             callback(document.querySelector('[data-node = "End"]'), finalPath, previousNodes, VisualiseFP)
         }
     },500)   
