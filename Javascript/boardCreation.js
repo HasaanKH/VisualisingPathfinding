@@ -102,12 +102,12 @@ export function createGrid () {  //appends x axis wise
     }
 }
 
-export function wallEdit() { //needs updating
+export function wallEdit() { 
     click ++;
     let children = document.getElementById("Grid").childNodes;
     for (let i = 1; i <= 248; i++) {
         let tempNode = children[i];
-        if (click % 2 === 1){
+        if (click % 2 === 1 && animEnd){
             tempNode.classList.add("wallEditing");
         }
         else {

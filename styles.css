@@ -9,7 +9,9 @@
 nav{
     display: flex;
     justify-content: center;
+    align-items: flex-start;
     background-color: white;
+    height: 10vh;
 }
 
 .wrapper {

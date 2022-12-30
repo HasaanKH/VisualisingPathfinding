@@ -1,8 +1,8 @@
 import { MinHeap } from "./MinheapClass.js";
 import { adjList} from "./main.js";
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
-export var animEnd = true; //bool that dictates whether init anim is finished.
-export function setanimEnd(value) {animEnd = value;}
+import { animEnd,setanimEnd } from "./DijkstraAlgo.js";
+
 var speed = 5; //slow: 75, medium: 50, fast; 25, developer: 5.
 //these need to be refreshed when, the refresh button is pressed.
 var finalPath;
@@ -10,7 +10,7 @@ var previousNodes;
 var intervalId;
 var distances; //map of node to distance.
 
-export function dijkstraAlgo() {
+export function aStarAlgo() {
     // Create a MinHeap to store the nodes and their corresponding
     // distances from the start node
     var visitNodes = [];
@@ -48,7 +48,7 @@ export function dijkstraAlgo() {
             let newDistance = Infinity;
             if(neighbour.style.backgroundColor != 'black')
             {
-                newDistance = distances.get(min.node) + 1;  //dijkstra is 1.
+                newDistance = distances.get(min.node) + weight;  //dijkstra is 1.
                 if (!visitNodes.includes(neighbour) && newDistance !== Infinity){
                     visitNodes.push(neighbour);
                 }
@@ -63,7 +63,7 @@ export function dijkstraAlgo() {
         }
     }
     finalPath = [];
-    animEnd = false;
+    setanimEnd(false);
     VisualColor(visitNodes, FindFP);
     return distances.get(document.querySelector('[data-node = "End"]'));
     
@@ -80,7 +80,7 @@ function VisualColor(iterable, callback) {
     intervalId = setInterval(() => { //solves async problem of final path loading before the end of first anim.
         let i = iterable.length - 2;
         if(iterable[i].classList.contains('visited')){
-            animEnd = true;
+            setanimEnd(true);
             callback(document.querySelector('[data-node = "End"]'), finalPath, previousNodes, VisualiseFP)
         }
     },500)   

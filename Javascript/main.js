@@ -1,5 +1,6 @@
-import { dijkstraAlgo, setanimEnd } from './DijkstraAlgo.js';
-import { setNodes, createGrid, wallEdit, setClick, setnodeList} from './boardCreation.js';
+import { dijkstraAlgo, setanimEnd, animEnd } from './DijkstraAlgo.js';
+import { setNodes, createGrid, wallEdit, setClick, setnodeList, nodeList} from './boardCreation.js';
+import { aStarAlgo } from './AstarAlgo.js';
 
 
 export var adjList;
@@ -17,8 +18,12 @@ function refresh() {
     for (let i = 249; i > -1; i--) { //only works in reverse?
         childrenNodes[i].remove();
     }
+    try{
+        document.getElementById('distanceText').remove()
+    }
+    catch{}
     setanimEnd(true);
-    setClick;
+    setClick();
     createGrid();
     setNodes();
     adjListBuilder();
@@ -47,21 +52,56 @@ function adjListBuilder () {
             
         }
     }
-    console.log(adjList);
 }
 
 function start() {
     let algoSelection = document.getElementById('algorithm').value;
-    if (algoSelection === "Dijkstra"){
+    if (algoSelection === "Dijkstra" && animEnd === true){
+        clearforStart();
+        try{
+            document.getElementById('distanceText').remove()
+        }
+        catch{}
         let distance = dijkstraAlgo();
-        let textElement = document.createElement('p')
-        textElement.style.alignSelf = 'center';
-        textElement.classList.add('wrapper');
-        textElement.innerHTML = distance;
-        document.getElementsByTagName('nav')[0].appendChild(textElement);
+        let textElement = document.createElement('p');
+        textElement.setAttribute('id', 'distanceText')
+        textElement.style.textAlign = 'center';
+        textElement.style.margin = '0.5rem'
+        textElement.innerHTML = 'The total distance is ' + distance;
+        let mainEle = document.getElementsByTagName('main')[0];
+        let childEle = document.getElementById('Grid');
+        mainEle.insertBefore(textElement, childEle);
+    }
+    else if (algoSelection === "A*" && animEnd === true) {
+        clearforStart();
+        try{
+            document.getElementById('distanceText').remove()
+        }
+        catch{}
+        let distance = aStarAlgo();
+        let textElement = document.createElement('p');
+        textElement.setAttribute('id', 'distanceText')
+        textElement.style.textAlign = 'center';
+        textElement.style.margin = '0.5rem'
+        textElement.innerHTML = 'The total distance is ' + distance;
+        let mainEle = document.getElementsByTagName('main')[0];
+        let childEle = document.getElementById('Grid');
+        mainEle.insertBefore(textElement, childEle);
     }
 }
-
+function clearforStart() {
+    for (let x of nodeList) {
+        try{
+            x.classList.remove('visited');
+            x.classList.remove('finalPath');
+        }
+        catch{}
+    }
+    setanimEnd(true);
+    setClick();
+    adjListBuilder();
+    setnodeList(document.getElementById('Grid').childNodes)
+}
 
 window.onload = () => {
     createGrid();
