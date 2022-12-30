@@ -23,7 +23,7 @@ function createNode (row, column, heuristic, phase) { //returns node
             this.style.backgroundColor = 'black';
             this.phase = 0;
         }
-        else if (editSigNodes) {
+        else if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start') {
             this.classList.add('potentialSigNode');
         }
     }
@@ -43,7 +43,7 @@ function createNode (row, column, heuristic, phase) { //returns node
             this.removeAttribute('data-node');
 
         }
-        else if (editSigNodes) {
+        else if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start') {
             editSigNodes = false;
             this.classList.remove('potentialSigNode');
             this.style.background = 'red';
@@ -62,7 +62,7 @@ function createNode (row, column, heuristic, phase) { //returns node
     }
     )
     node.addEventListener('mouseout', function(){
-        if (editSigNodes) {
+        if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start') {
             this.classList.remove('potentialSigNode');
             this.style.background = 'white';
         }  
