@@ -25,10 +25,15 @@ function createNode (row, column, heuristic, phase) { //returns node
     node.setAttribute("id", row.toString() +' '+ column.toString());
     node.classList.add("gridElement");
     node.addEventListener("mouseover", function(){
-        if (this.classList.contains('wallEditing') && animEnd)
+        if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start' )
         {
             this.style.backgroundColor = 'black';
             this.phase = 0;
+            try{
+                this.classList.remove('visited');
+                this.classList.remove('finalPath');
+            }
+            catch{}
         }
         else if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && animEnd) {
             this.classList.add('potentialSigNode');
@@ -52,8 +57,14 @@ function createNode (row, column, heuristic, phase) { //returns node
         }
         else if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && animEnd) {
             editSigNodes = false;
-            this.classList.remove('potentialSigNode');
-            this.style.background = 'red';
+            try{
+                this.classList.remove('visited');
+                this.classList.remove('potentialSigNode');
+                this.classList.remove('finalPath');
+
+            }
+            catch{}
+            this.style.backgroundColor = 'red';
             this.setAttribute('data-node', nodeOrder);
             if (nodeOrder === 'Start'){
                 nodeStartId = gridX * (row - 1) + column - 1;
@@ -62,7 +73,7 @@ function createNode (row, column, heuristic, phase) { //returns node
                 nodeEndId = gridX * (row - 1) + column - 1;
             }
         }
-        else if (this.classList.contains('wallEditing') && animEnd) {
+        else if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start' ) {
             this.style.backgroundColor = 'white';
             this.phase = 1;
         }
