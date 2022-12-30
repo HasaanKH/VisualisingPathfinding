@@ -3,7 +3,6 @@ import { dijkstraAlgo } from './DijkstraAlgo.js';
 
 export var nodeList;
 export var distances = new Map(); //map of node to distance.
-export var visitNodes = [];
 export var adjList = new Map();
 
 var weightsArray = [];
@@ -12,6 +11,7 @@ var gridY = 10;
 var gridX = 25;
 
 window.dijkstraAlgo = dijkstraAlgo; //necessary for onclick events
+window.wallEdit = wallEdit;
 
 
 function createNode (row, column, heuristic, phase) { //returns node

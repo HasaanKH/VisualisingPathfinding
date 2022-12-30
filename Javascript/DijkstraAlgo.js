@@ -1,5 +1,7 @@
 import { MinHeap } from "./MinheapClass.js";
-import { adjList, distances, visitNodes, nodeList } from "./logic.js";
+import { adjList, distances, nodeList } from "./logic.js";
+var visitNodes = [];
+var calculatedNodes = [];
 var path;
 var speed;
 
@@ -31,6 +33,9 @@ export function dijkstraAlgo() {
     while (minHeap.heap.length > 0) {
         // Extract the minimum element from the min heap
         const min = minHeap.extractMin();
+        if (!calculatedNodes.includes(min.node)){
+            calculatedNodes.push(min.node);
+        }
         // Update the distances of the neighbours
         const neighbours = graph.get(min.node);
         for (const [neighbour, weight] of neighbours) { //needs to be fixed.
@@ -54,19 +59,19 @@ export function dijkstraAlgo() {
 
     }
 
-    path = {distances, previousNodes};
+    path = {distances, previousNodes, calculatedNodes, visitNodes};
     console.log(path);
-    VisualColor();
+    VisualColor(visitNodes);
     return path;
 }
 
-function VisualColor() {
-    speed = 75; //slow: 100, medium: 75; fast; 50
+function VisualColor(iterable) {
+    speed = 100; //slow: 100, medium: 75; fast; 50
     var counter = 1000;
-    for(const node of visitNodes) {
-        if (node != nodeList[249]){
+    for(const node of iterable) {
+        if (node != nodeList[249] && node != nodeList[0] && distances.get(node) != Infinity){
             counter = counter + speed;
-            setTimeout(() => {node.style.backgroundColor = 'purple';} , counter);
+            setTimeout(() => {node.classList.add('visited');} , counter);
         }
     } 
 }
