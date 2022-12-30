@@ -4,7 +4,10 @@ import { nodeList } from "./boardCreation.js";
 var visitNodes = [];
 var calculatedNodes = [];
 var path;
-var speed;
+var speed = 20; //slow: 100, medium: 75; fast; 50
+var finalPath;
+var previousNodes;
+var intervalId;
 
 export function dijkstraAlgo() {
     // Create a MinHeap to store the nodes and their corresponding
@@ -27,7 +30,8 @@ export function dijkstraAlgo() {
 
     // Create a map to store the previous node for each node
     // in the shortest path from the start node
-    const previousNodes = new Map();
+    previousNodes = new Map();
+    previousNodes.set(document.querySelector('[data-node = "Start"]', null)) //placing start node.
 
     // While the min heap is not empty, extract the minimum element
     // from the heap and update the distances of its neighbours
@@ -61,12 +65,12 @@ export function dijkstraAlgo() {
     }
 
     path = {distances, previousNodes, calculatedNodes, visitNodes};
-    VisualColor(visitNodes);
-    return path;
+    finalPath = [];
+    VisualColor(visitNodes, FindFP);
+    
 }
 
-function VisualColor(iterable) {
-    speed = 100; //slow: 100, medium: 75; fast; 50
+function VisualColor(iterable, callback) {
     var counter = 1000;
     for(const node of iterable) {
         if (node != nodeList[249] && node != nodeList[0] && distances.get(node) != Infinity){
@@ -74,4 +78,27 @@ function VisualColor(iterable) {
             setTimeout(() => {node.classList.add('visited');} , counter);
         }
     } 
+    intervalId = setInterval(() => { //solves async problem
+        if(visitNodes[248].classList.contains('visited')){
+            callback(document.querySelector('[data-node = "End"]'), finalPath, previousNodes, VisualiseFP)
+        }
+    },2000)   
 }
+
+function FindFP (endNode, finalPath, previousNodes, callback) {
+    while(endNode !== undefined) { //returns finalpath
+        finalPath.push(endNode);
+        endNode = previousNodes.get(endNode);
+    }
+    callback(finalPath)
+}
+
+function VisualiseFP(Fp){
+    var counter = 1000;
+    for(let i = 1; i < Fp.length-1; i++) {
+        counter = counter + speed;
+        setTimeout(() => {Fp[i].classList.add('finalPath');} , counter);
+    } 
+    clearInterval(intervalId);
+}
+

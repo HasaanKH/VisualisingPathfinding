@@ -12,7 +12,6 @@ export class MinHeap
         for (let i = 0; i < this.heap.length; i++){
             if (this.heap[i].node == node){
                 this.heap[i].weight = weight;
-                console.log(this.heap[i].weight);
                 this.heap[i].parent = parent;
                 this.bubbleUp(i); //new value is smaller, so bubble up.
                 break;

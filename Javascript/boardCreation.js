@@ -8,7 +8,6 @@ function createNode (row, column, heuristic, phase) { //returns node
     node.setAttribute("column", column);
     node.setAttribute("heuristic", heuristic);
     node.setAttribute("phase", phase) //determines if passable, 1 is true
-    node.setAttribute('sig', 0) //whether the node is significant or not e.g start = 1.
     node.setAttribute("id", row.toString() +' '+ column.toString());
     node.classList.add("gridElement");
     node.addEventListener("mouseover", function(){
@@ -25,7 +24,8 @@ function createNode (row, column, heuristic, phase) { //returns node
 export function setNodes () {  //sets start and end nodes.
     nodeList = document.getElementById('Grid').childNodes;
     nodeList[0].style.backgroundColor = 'red';
-    nodeList[0].sig = 1;
+    nodeList[0].setAttribute('data-node', 'Start');
+    nodeList[249].setAttribute('data-node', 'End');
     nodeList[249].style.backgroundColor = 'red';
 }
 
