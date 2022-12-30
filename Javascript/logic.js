@@ -1,5 +1,5 @@
 import { dijkstraAlgo } from './DijkstraAlgo.js';
-import { setNodes, createGrid } from './boardCreation.js';
+import { setNodes, createGrid, wallEdit} from './boardCreation.js';
 
 export var distances = new Map(); //map of node to distance.
 export var adjList = new Map();
@@ -9,25 +9,9 @@ export var adjList = new Map();
 var gridY = 10;
 var gridX = 25;
 
-window.dijkstraAlgo = dijkstraAlgo; //necessary for onclick events
-window.wallEdit = wallEdit;
+window.wallEdit = wallEdit; //necessary for html onclick events, DO NOT TOUCH!!
+window.start = start;   //necessary for html onclick events, DO NOT TOUCH!!
 
-
-
-var click = 0;
-function wallEdit() {
-    click ++;
-    let children = document.getElementById("Grid").childNodes;
-    for (let i = 1; i <= 248; i++) {
-        let tempNode = children[i];
-        if (click % 2 === 1){
-            tempNode.classList.add("wallEditing");
-        }
-        else {
-            tempNode.classList.remove("wallEditing");
-        }
-    }
-}
 
 
 function adjListBuilder () {
@@ -49,6 +33,13 @@ function adjListBuilder () {
             }
             adjList.set(currentNode, neighbourList);
         }
+    }
+}
+
+function start() {
+    let algoSelection = document.getElementById('algorithm').value;
+    if (algoSelection === "Dijkstra"){
+        dijkstraAlgo();
     }
 }
 
