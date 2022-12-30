@@ -1,10 +1,11 @@
 import { MinHeap } from "./MinheapClass.js";
 import { adjList, distances } from "./main.js";
 import { nodeList, nodeStartId, nodeEndId} from "./boardCreation.js";
+export var animEnd = true; //bool that dictates whether init anim is finished.
 var visitNodes = [];
 var calculatedNodes = [];
 var path;
-var speed = 5; //slow: 75, medium: 50, fast; 25, developer: 5.
+var speed = 20; //slow: 75, medium: 50, fast; 25, developer: 5.
 var finalPath;
 var previousNodes;
 var intervalId;
@@ -66,6 +67,7 @@ export function dijkstraAlgo() {
 
     path = {distances, previousNodes, calculatedNodes, visitNodes};
     finalPath = [];
+    animEnd = false;
     VisualColor(visitNodes, FindFP);
     
 }
@@ -82,6 +84,7 @@ function VisualColor(iterable, callback) {
         let i = visitNodes.length - 2;
         console.log(visitNodes);
         if(visitNodes[i].classList.contains('visited')){
+            animEnd = true;
             callback(document.querySelector('[data-node = "End"]'), finalPath, previousNodes, VisualiseFP)
         }
     },500)   

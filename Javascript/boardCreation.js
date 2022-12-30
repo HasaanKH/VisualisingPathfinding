@@ -1,4 +1,5 @@
 import { gridX, gridY } from "./main.js";
+import { animEnd } from "./DijkstraAlgo.js";
 export var nodeList;
 export var nodeStartId = 0; //choose the location of the start node.
 export var nodeEndId = 249;
@@ -18,32 +19,32 @@ function createNode (row, column, heuristic, phase) { //returns node
     node.setAttribute("id", row.toString() +' '+ column.toString());
     node.classList.add("gridElement");
     node.addEventListener("mouseover", function(){
-        if (this.classList.contains('wallEditing'))
+        if (this.classList.contains('wallEditing') && animEnd)
         {
             this.style.backgroundColor = 'black';
             this.phase = 0;
         }
-        else if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start') {
+        else if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && animEnd) {
             this.classList.add('potentialSigNode');
         }
     }
     );
     node.addEventListener('click', function(){
-        if (this.dataset.node == 'Start' && click%2 === 0){
+        if (this.dataset.node == 'Start' && click%2 === 0 &&animEnd){
             this.style.backgroundColor = 'white';
             editSigNodes = true;
             nodeOrder = 'Start';
             this.removeAttribute('data-node')
 
         }
-        else if (this.dataset.node == 'End' && click%2 === 0){
+        else if (this.dataset.node == 'End' && click%2 === 0 && animEnd){
             this.style.backgroundColor = 'white';
             editSigNodes = true;
             nodeOrder = 'End';
             this.removeAttribute('data-node');
 
         }
-        else if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start') {
+        else if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && animEnd) {
             editSigNodes = false;
             this.classList.remove('potentialSigNode');
             this.style.background = 'red';
@@ -55,14 +56,14 @@ function createNode (row, column, heuristic, phase) { //returns node
                 nodeEndId = gridX * (row - 1) + column - 1;
             }
         }
-        else if (this.classList.contains('wallEditing')) {
+        else if (this.classList.contains('wallEditing') && animEnd) {
             this.style.backgroundColor = 'white';
             this.phase = 1;
         }
     }
     )
     node.addEventListener('mouseout', function(){
-        if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start') {
+        if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && animEnd) {
             this.classList.remove('potentialSigNode');
             this.style.background = 'white';
         }  
