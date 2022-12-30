@@ -4,6 +4,8 @@ export var nodeStartId = 0; //choose the location of the start node.
 export var nodeEndId = 249;
 var editSigNodes = false; //checks whether sig nodes can be moved, true is yes.
 var nodeOrder; //whether the node is start or end for changing data-node.
+var click = 0; //tracks whether wall editing is active if mod 2 == 1, its active.
+
 
 var grid; //holds all the nodes, the board.
 
@@ -27,14 +29,14 @@ function createNode (row, column, heuristic, phase) { //returns node
     }
     );
     node.addEventListener('click', function(){
-        if (this.dataset.node == 'Start'){
+        if (this.dataset.node == 'Start' && click%2 === 0){
             this.style.backgroundColor = 'white';
             editSigNodes = true;
             nodeOrder = 'Start';
             this.removeAttribute('data-node')
 
         }
-        else if (this.dataset.node == 'End'){
+        else if (this.dataset.node == 'End' && click%2 === 0){
             this.style.backgroundColor = 'white';
             editSigNodes = true;
             nodeOrder = 'End';
@@ -52,6 +54,10 @@ function createNode (row, column, heuristic, phase) { //returns node
             else {
                 nodeEndId = gridX * (row - 1) + column - 1;
             }
+        }
+        else if (this.classList.contains('wallEditing')) {
+            this.style.backgroundColor = 'white';
+            this.phase = 1;
         }
     }
     )
@@ -82,7 +88,6 @@ export function createGrid () {  //appends x axis wise
     }
 }
 
-var click = 0;
 export function wallEdit() { //needs updating
     click ++;
     let children = document.getElementById("Grid").childNodes;
