@@ -9,6 +9,9 @@ var click = 0; //tracks whether wall editing is active if mod 2 == 1, its active
 export function setClick() {
     click = 0;
 }
+export function setnodeList(value) {
+    nodeList = value;
+}
 
 
 var grid; //holds all the nodes, the board.

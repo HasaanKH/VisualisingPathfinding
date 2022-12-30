@@ -1,8 +1,8 @@
 import { dijkstraAlgo, setanimEnd } from './DijkstraAlgo.js';
-import { setNodes, createGrid, wallEdit, setClick} from './boardCreation.js';
+import { setNodes, createGrid, wallEdit, setClick, setnodeList} from './boardCreation.js';
 
-export var distances = new Map(); //map of node to distance.
-export var adjList = new Map();
+
+export var adjList;
 
 export var gridY = 10;
 export var gridX = 25;
@@ -17,15 +17,16 @@ function refresh() {
     for (let i = 249; i > -1; i--) { //only works in reverse?
         childrenNodes[i].remove();
     }
-    adjList = new Map(); //need to clear variables before refreshing.
     setanimEnd(true);
     setClick;
     createGrid();
     setNodes();
     adjListBuilder();
+    setnodeList(document.getElementById('Grid').childNodes)
 }
 
 function adjListBuilder () {
+    adjList = new Map(); //need to clear variables before refreshin
     for (let y = 1; y < gridY + 1; y++){
         for(let x = 1; x < gridX + 1; x++){
             let currentNode = document.getElementById(y +' '+x);
@@ -53,7 +54,11 @@ function start() {
     let algoSelection = document.getElementById('algorithm').value;
     if (algoSelection === "Dijkstra"){
         let distance = dijkstraAlgo();
-        document.getElementsByTagName('nav')[0].innerHTML = distance;
+        let textElement = document.createElement('p')
+        textElement.style.alignSelf = 'center';
+        textElement.classList.add('wrapper');
+        textElement.innerHTML = distance;
+        document.getElementsByTagName('nav')[0].appendChild(textElement);
     }
 }
 

@@ -1,6 +1,6 @@
 import { MinHeap } from "./MinheapClass.js";
-import { adjList, distances } from "./main.js";
-import { nodeList, nodeStartId, nodeEndId} from "./boardCreation.js";
+import { adjList} from "./main.js";
+import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
 export var animEnd = true; //bool that dictates whether init anim is finished.
 export function setanimEnd(value) {animEnd = value;}
 var speed = 20; //slow: 75, medium: 50, fast; 25, developer: 5.
@@ -8,14 +8,17 @@ var speed = 20; //slow: 75, medium: 50, fast; 25, developer: 5.
 var finalPath;
 var previousNodes;
 var intervalId;
+var distances; //map of node to distance.
 
 export function dijkstraAlgo() {
     // Create a MinHeap to store the nodes and their corresponding
     // distances from the start node
     var visitNodes = [];
+    distances = new Map();
     var minHeap = new MinHeap();
     var graph = adjList;
-    var startNode = nodeList[nodeStartId];
+    var startNode = document.querySelector('[data-node = "Start"]');
+    console.log(graph);
 
     // Initialize the distances of all nodes to infinity, except
     // for the start node, which has a distance of 0
@@ -23,6 +26,7 @@ export function dijkstraAlgo() {
         distances.set(node, Number.POSITIVE_INFINITY);
     }
     distances.set(startNode, 0); //start node has a distance of 0.
+    console.log(distances);
 
     // Add all the nodes to the min heap
     for (const [node, distance] of distances.entries()) {
@@ -59,12 +63,12 @@ export function dijkstraAlgo() {
                 previousNodes.set(neighbour, min.node);
             }
         }
-
     }
-
     finalPath = [];
     animEnd = false;
     VisualColor(visitNodes, FindFP);
+    console.log(distances);
+    return distances.get(document.querySelector('[data-node = "End"]'));
     
 }
 
