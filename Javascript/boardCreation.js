@@ -6,6 +6,9 @@ export var nodeEndId = 249;
 var editSigNodes = false; //checks whether sig nodes can be moved, true is yes.
 var nodeOrder; //whether the node is start or end for changing data-node.
 var click = 0; //tracks whether wall editing is active if mod 2 == 1, its active.
+export function setClick() {
+    click = 0;
+}
 
 
 var grid; //holds all the nodes, the board.
@@ -30,7 +33,7 @@ function createNode (row, column, heuristic, phase) { //returns node
     }
     );
     node.addEventListener('click', function(){
-        if (this.dataset.node == 'Start' && click%2 === 0 &&animEnd){
+        if (this.dataset.node == 'Start' && click%2 === 0 && animEnd){
             this.style.backgroundColor = 'white';
             editSigNodes = true;
             nodeOrder = 'Start';

@@ -1,5 +1,5 @@
-import { dijkstraAlgo } from './DijkstraAlgo.js';
-import { setNodes, createGrid, wallEdit} from './boardCreation.js';
+import { dijkstraAlgo, setanimEnd } from './DijkstraAlgo.js';
+import { setNodes, createGrid, wallEdit, setClick} from './boardCreation.js';
 
 export var distances = new Map(); //map of node to distance.
 export var adjList = new Map();
@@ -9,8 +9,22 @@ export var gridX = 25;
 
 window.wallEdit = wallEdit; //necessary for html onclick events, DO NOT TOUCH!!
 window.start = start;   //necessary for html onclick events, DO NOT TOUCH!!
+window.refresh = refresh;
 
 
+function refresh() {
+    let childrenNodes = document.getElementById('Grid').childNodes;
+    for (let i = 249; i > -1; i--) { //only works in reverse?
+        childrenNodes[i].remove();
+    }
+    setanimEnd(true);
+    setClick;
+    createGrid();
+    setNodes();
+    adjListBuilder();
+    
+    
+}
 
 function adjListBuilder () {
     for (let y = 1; y < gridY + 1; y++){

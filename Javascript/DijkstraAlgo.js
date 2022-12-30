@@ -2,10 +2,9 @@ import { MinHeap } from "./MinheapClass.js";
 import { adjList, distances } from "./main.js";
 import { nodeList, nodeStartId, nodeEndId} from "./boardCreation.js";
 export var animEnd = true; //bool that dictates whether init anim is finished.
-var visitNodes = [];
-var calculatedNodes = [];
-var path;
+export function setanimEnd(value) {animEnd = value;}
 var speed = 20; //slow: 75, medium: 50, fast; 25, developer: 5.
+//these need to be refreshed when, the refresh button is pressed.
 var finalPath;
 var previousNodes;
 var intervalId;
@@ -13,6 +12,7 @@ var intervalId;
 export function dijkstraAlgo() {
     // Create a MinHeap to store the nodes and their corresponding
     // distances from the start node
+    var visitNodes = [];
     var minHeap = new MinHeap();
     var graph = adjList;
     var startNode = nodeList[nodeStartId];
@@ -39,14 +39,11 @@ export function dijkstraAlgo() {
     while (minHeap.heap.length > 0) {
         // Extract the minimum element from the min heap
         const min = minHeap.extractMin();
-        if (!calculatedNodes.includes(min.node)){
-            calculatedNodes.push(min.node);
-        }
         // Update the distances of the neighbours
         const neighbours = graph.get(min.node);
         for (const [neighbour, weight] of neighbours) { //needs to be fixed.
             // Calculate the new distance to the neighbour
-            var newDistance = Infinity;
+            let newDistance = Infinity;
             if(neighbour.style.backgroundColor != 'black')
             {
                 newDistance = distances.get(min.node) + weight;
@@ -65,7 +62,6 @@ export function dijkstraAlgo() {
 
     }
 
-    path = {distances, previousNodes, calculatedNodes, visitNodes};
     finalPath = [];
     animEnd = false;
     VisualColor(visitNodes, FindFP);
@@ -81,9 +77,8 @@ function VisualColor(iterable, callback) {
         }
     } 
     intervalId = setInterval(() => { //solves async problem of final path loading before the end of first anim.
-        let i = visitNodes.length - 2;
-        console.log(visitNodes);
-        if(visitNodes[i].classList.contains('visited')){
+        let i = iterable.length - 2;
+        if(iterable[i].classList.contains('visited')){
             animEnd = true;
             callback(document.querySelector('[data-node = "End"]'), finalPath, previousNodes, VisualiseFP)
         }
