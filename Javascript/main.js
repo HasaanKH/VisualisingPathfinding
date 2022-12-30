@@ -4,8 +4,8 @@ import { setNodes, createGrid, wallEdit} from './boardCreation.js';
 export var distances = new Map(); //map of node to distance.
 export var adjList = new Map();
 
-var gridY = 10;
-var gridX = 25;
+export var gridY = 10;
+export var gridX = 25;
 
 window.wallEdit = wallEdit; //necessary for html onclick events, DO NOT TOUCH!!
 window.start = start;   //necessary for html onclick events, DO NOT TOUCH!!

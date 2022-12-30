@@ -1,5 +1,9 @@
+import { gridX, gridY } from "./main.js";
 export var nodeList;
-export var randomStart = Math.floor(Math.random()*150);
+export var nodeStartId = 0; //choose the location of the start node.
+export var nodeEndId = 249;
+var editSigNodes = false; //checks whether sig nodes can be moved, true is yes.
+var nodeOrder; //whether the node is start or end for changing data-node.
 
 var grid; //holds all the nodes, the board.
 
@@ -17,15 +21,54 @@ function createNode (row, column, heuristic, phase) { //returns node
             this.style.backgroundColor = 'black';
             this.phase = 0;
         }
+        else if (editSigNodes) {
+            this.classList.add('potentialSigNode');
+        }
     }
     );
+    node.addEventListener('click', function(){
+        if (this.dataset.node == 'Start'){
+            this.style.backgroundColor = 'white';
+            editSigNodes = true;
+            nodeOrder = 'Start';
+            this.removeAttribute('data-node')
+
+        }
+        else if (this.dataset.node == 'End'){
+            this.style.backgroundColor = 'white';
+            editSigNodes = true;
+            nodeOrder = 'End';
+            this.removeAttribute('data-node');
+
+        }
+        else if (editSigNodes) {
+            editSigNodes = false;
+            this.classList.remove('potentialSigNode');
+            this.style.background = 'red';
+            this.setAttribute('data-node', nodeOrder);
+            if (nodeOrder === 'Start'){
+                nodeStartId = gridX * (row - 1) + column - 1;
+            }
+            else {
+                nodeEndId = gridX * (row - 1) + column - 1;
+            }
+            console.log(nodeStartId);
+        }
+    }
+    )
+    node.addEventListener('mouseout', function(){
+        if (editSigNodes) {
+            this.classList.remove('potentialSigNode');
+            this.style.background = 'white';
+        }  
+    })
     return node;
 }
 
 export function setNodes () {  //sets start and end nodes.
     nodeList = document.getElementById('Grid').childNodes;
-    nodeList[randomStart].style.backgroundColor = 'red'; //var changed
-    nodeList[randomStart].setAttribute('data-node', 'Start'); //var changed
+    nodeList[nodeStartId].style.backgroundColor = 'red'; //var changed
+    nodeList[nodeStartId].setAttribute('data-node', 'Start'); //var changed
     nodeList[249].setAttribute('data-node', 'End');
     nodeList[249].style.backgroundColor = 'red';
 }

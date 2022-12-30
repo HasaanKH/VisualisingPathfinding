@@ -1,10 +1,10 @@
 import { MinHeap } from "./MinheapClass.js";
 import { adjList, distances } from "./main.js";
-import { nodeList, randomStart} from "./boardCreation.js";
+import { nodeList, nodeStartId, nodeEndId} from "./boardCreation.js";
 var visitNodes = [];
 var calculatedNodes = [];
 var path;
-var speed = 75; //slow: 100, medium: 75; fast; 50
+var speed = 5; //slow: 75, medium: 50, fast; 25, developer: 5.
 var finalPath;
 var previousNodes;
 var intervalId;
@@ -14,7 +14,7 @@ export function dijkstraAlgo() {
     // distances from the start node
     var minHeap = new MinHeap();
     var graph = adjList;
-    var startNode = nodeList[randomStart];
+    var startNode = nodeList[nodeStartId];
 
     // Initialize the distances of all nodes to infinity, except
     // for the start node, which has a distance of 0
@@ -73,7 +73,7 @@ export function dijkstraAlgo() {
 function VisualColor(iterable, callback) {
     var counter = 0;
     for(const node of iterable) {
-        if (node != nodeList[249] && node != nodeList[randomStart] && distances.get(node) != Infinity){ //randomstart changed
+        if (node != nodeList[nodeEndId] && node != nodeList[nodeStartId] && distances.get(node) != Infinity){ //randomstart changed
             counter = counter + speed;
             setTimeout(() => {node.classList.add('visited');} , counter);
         }

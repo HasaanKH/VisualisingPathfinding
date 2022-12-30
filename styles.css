@@ -45,7 +45,6 @@ button, select, input{
 
 .visited {
     animation-name: visitedAnimation;
-    animation-duration: 4s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in;
     animation-duration: 0.3s;
@@ -73,7 +72,6 @@ button, select, input{
 
 .finalPath {
     animation-name: finalPathAnimation;
-    animation-duration: 4s;
     animation-fill-mode: forwards;
     animation-timing-function: ease-in;
     animation-duration: 0.3s;
@@ -98,4 +96,18 @@ button, select, input{
         background-color: rgb(238, 255, 0);
     }
 
+}
+
+.potentialSigNode{
+    animation-name: sigNodeAnim;
+    animation-duration: 0.5s;
+    animation-fill-mode: forwards;
+    animation-timing-function: ease-in;
+    animation-iteration-count: 1;
+}
+
+@keyframes sigNodeAnim {
+    0%{transform: scale(1);}
+    75%{transform: scale(1.3);}
+    100%{transform: scale(1.2); background-color: red;}
 }
