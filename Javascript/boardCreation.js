@@ -12,6 +12,7 @@ export function setClick() {
 export function setnodeList(value) {
     nodeList = value;
 }
+var trigger;
 
 
 var grid; //holds all the nodes, the board.
@@ -25,7 +26,7 @@ function createNode (row, column, heuristic, phase) { //returns node
     node.setAttribute("id", row.toString() +' '+ column.toString());
     node.classList.add("gridElement");
     node.addEventListener("mouseover", function(){
-        if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start' )
+        if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && trigger )
         {
             this.style.backgroundColor = 'black';
             this.phase = 0;
@@ -41,14 +42,14 @@ function createNode (row, column, heuristic, phase) { //returns node
     }
     );
     node.addEventListener('click', function(){
-        if (this.dataset.node == 'Start' && click%2 === 0 && animEnd){
+        if (this.dataset.node === 'Start' && click%2 === 0 && animEnd){
             this.style.backgroundColor = 'white';
             editSigNodes = true;
             nodeOrder = 'Start';
             this.removeAttribute('data-node')
 
         }
-        else if (this.dataset.node == 'End' && click%2 === 0 && animEnd){
+        else if (this.dataset.node === 'End' && click%2 === 0 && animEnd){
             this.style.backgroundColor = 'white';
             editSigNodes = true;
             nodeOrder = 'End';
@@ -61,7 +62,6 @@ function createNode (row, column, heuristic, phase) { //returns node
                 this.classList.remove('visited');
                 this.classList.remove('potentialSigNode');
                 this.classList.remove('finalPath');
-
             }
             catch{}
             this.style.backgroundColor = 'red';
@@ -73,18 +73,21 @@ function createNode (row, column, heuristic, phase) { //returns node
                 nodeEndId = gridX * (row - 1) + column - 1;
             }
         }
-        else if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start' ) {
+    })
+    node.addEventListener('mousedown', function(){
+        trigger = true;
+        if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start') {
             this.style.backgroundColor = 'white';
             this.phase = 1;
         }
-    }
-    )
+    })
     node.addEventListener('mouseout', function(){
         if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && animEnd) {
             this.classList.remove('potentialSigNode');
             this.style.background = 'white';
         }  
     })
+    node.addEventListener('mouseup', () => {trigger = false;})
     return node;
 }
 
@@ -116,7 +119,7 @@ export function createGrid () {  //appends x axis wise
 export function wallEdit() { 
     click ++;
     let children = document.getElementById("Grid").childNodes;
-    for (let i = 1; i <= 248; i++) {
+    for (let i = 0; i <= 249; i++) {
         let tempNode = children[i];
         if (click % 2 === 1 && animEnd){
             tempNode.classList.add("wallEditing");
