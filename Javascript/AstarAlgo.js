@@ -35,12 +35,15 @@ export function aStarAlgo() {
     // in the shortest path from the start node
     previousNodes = new Map();
     previousNodes.set(document.querySelector('[data-node = "Start"]', null)) //placing start node.
-
+    let flag = false;
     // While the min heap is not empty, extract the minimum element
     // from the heap and update the distances of its neighbours
-    while (minHeap.heap.length > 0) {
+    while (minHeap.heap.length > 0 && flag == false) {
         // Extract the minimum element from the min heap
         const min = minHeap.extractMin();
+        if(min.node == document.querySelector('[data-node = "End"]')){
+            flag = true;
+        }
         // Update the distances of the neighbours
         const neighbours = graph.get(min.node);
         for (const [neighbour, weight] of neighbours) { //needs to be fixed.

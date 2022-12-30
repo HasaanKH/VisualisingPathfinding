@@ -24,6 +24,7 @@ function createNode (row, column, heuristic, phase) { //returns node
     node.setAttribute("heuristic", heuristic);
     node.setAttribute("phase", phase) //determines if passable, 1 is true
     node.setAttribute("id", row.toString() +' '+ column.toString());
+    node.classList.add('unselectable');
     node.classList.add("gridElement");
     node.addEventListener("mouseover", function(){
         if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && trigger )
