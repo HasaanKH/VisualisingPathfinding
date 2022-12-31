@@ -6,6 +6,7 @@ var distances;
 var intervalId;
 var visitNodes; //to preserve the order
 var speed = 5;
+var INF = 10000000;
 
 
 export function floydAlgo() {
@@ -15,7 +16,6 @@ export function floydAlgo() {
     var distanceMatrix = [];
     var routeMatrix = [];
     var childNodes = document.getElementById('Grid').childNodes;
-    var INF = 10000000;
     let startN = document.querySelector('[data-node = "Start"]');
     let endN = document.querySelector('[data-node = "End"]');
     //these variables must be assigned in order to allow the function to be repeatable.
@@ -24,17 +24,18 @@ export function floydAlgo() {
         let routeMap = [];
         let nNodes = Array.from(neighbourList, x => x[0])
         for (let i = 0 ;i < childNodes.length; i ++) {
-            if (childNodes[i] !== node && !nNodes.includes(childNodes[i]) ){
+            if (childNodes[i] !== node && !nNodes.includes(childNodes[i]) && childNodes[i].getAttribute('phase') == 1 ){
                 workingMap.push([childNodes[i], INF]);
                 routeMap.push([childNodes[i], node]); //setting up both tables
             }
-            else if (childNodes[i] === node) {
+            else if (childNodes[i] === node && childNodes[i].getAttribute('phase') == 1) {
                 workingMap.push([childNodes[i], 0]);
                 routeMap.push([childNodes[i], null]); 
             }
-            else if (nNodes.includes(childNodes[i])){
+            else if (nNodes.includes(childNodes[i]) && childNodes[i].getAttribute('phase') == 1 ){
                 for (let x of neighbourList) {
-                    if (x[0] === childNodes[i]) {
+                    if (x[0] === childNodes[i]) 
+                    { //need to add condition
                         workingMap.push([childNodes[i], x[1]]);
                         routeMap.push([childNodes[i], node]); 
                         break;
@@ -42,10 +43,12 @@ export function floydAlgo() {
                 }
             }
         }
-        distanceMatrix.push([node, workingMap]);
-        routeMatrix.push([node, routeMap])
+        if(node.getAttribute('phase') == 1){
+            distanceMatrix.push([node, workingMap]);
+            routeMatrix.push([node, routeMap])
+        }
     }
-    //init matricies complete.
+    //updating values in matrix.
     for(let i = 0 ; i < distanceMatrix.length; i ++) {
         let node = distanceMatrix[i][0];;
         let distanceMap = distanceMatrix[i][1]; //iterator not map
@@ -60,7 +63,8 @@ export function floydAlgo() {
             }
         }
     }
-    //code functional
+
+    //final path output
     const nodesfromDistanceMat = Array.from(distanceMatrix, x => x[0]);
     let currentNode = endN; //keeping track of intermediate nodes.
     while (currentNode !== startN) {
@@ -88,9 +92,10 @@ export function floydAlgo() {
         if (nodesfromDistanceMat[i] === startN){
             distances = distanceMatrix[i][1]
             distances = new Map(distances.map(([x,y]) => [x, y]))
+            cleanVN (visitNodes, distances);
         }
     }
-    visitNodes = Array.from(visitNodes.keys());
+    visitNodes = Array.from(visitNodes.keys()); //clean this up, only nodes that have non inf dist
     VisualColor(visitNodes, VisualiseFP);
     return distances.get(endN);
 }
@@ -98,7 +103,7 @@ export function floydAlgo() {
 function VisualColor(iterable, callback) {
     var counter = 0;
     for(const node of iterable) {
-        if (node != nodeList[nodeEndId] && node != nodeList[nodeStartId] && distances.get(node) != 10000000){ //randomstart changed
+        if (node != nodeList[nodeEndId] && node != nodeList[nodeStartId] && distances.get(node) !== INF){ //randomstart changed
             counter = counter + speed;
             setTimeout(() => {node.classList.add('visited');} , counter);
         }
@@ -120,4 +125,13 @@ function VisualiseFP(Fp){
         setTimeout(() => {Fp[i].classList.add('finalPath');} , counter);
     } 
     clearInterval(intervalId);
+}
+
+function cleanVN(VN, distanceMap) { //
+    for (let [key, value] of distanceMap) {
+        if (value === INF) {
+            console.log('ran')
+            VN.delete(key);
+        }
+    }
 }
