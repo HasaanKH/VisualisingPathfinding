@@ -51,7 +51,7 @@ export function aStarAlgo() {
             let newDistance = Infinity;
             if(neighbour.style.backgroundColor != 'black')
             {
-                newDistance = distances.get(min.node) + weight;  //dijkstra is 1.
+                newDistance = distances.get(min.node) + Number(neighbour.getAttribute('heuristic'))+ weight;  //dijkstra is 1.
                 if (!visitNodes.includes(neighbour) && newDistance !== Infinity){
                     visitNodes.push(neighbour);
                 }

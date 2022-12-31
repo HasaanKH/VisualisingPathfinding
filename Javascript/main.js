@@ -1,6 +1,7 @@
 import { dijkstraAlgo, setanimEnd, animEnd } from './DijkstraAlgo.js';
 import { setNodes, createGrid, wallEdit, setClick, setnodeList, nodeList} from './boardCreation.js';
 import { aStarAlgo } from './AstarAlgo.js';
+import { floydAlgo } from './FloydAlgo.js';
 
 
 export var adjList;
@@ -47,7 +48,7 @@ function adjListBuilder () {
             );
             let neighbourList = [];
             for(let i = 0; i < currentNeighbour.length; i++) {
-               neighbourList.push([currentNeighbour[i], Number(currentNeighbour[i].getAttribute('heuristic'))])
+               neighbourList.push([currentNeighbour[i], 1])
             }
             adjList.set(currentNode, neighbourList);
             
@@ -67,7 +68,7 @@ function start() {
         let textElement = document.createElement('p');
         textElement.setAttribute('id', 'distanceText')
         textElement.style.textAlign = 'center';
-        textElement.style.margin = '0.5rem'
+        textElement.style.margin = '0.2rem'
         textElement.innerHTML = 'The total distance is ' + distance;
         let mainEle = document.getElementsByTagName('main')[0];
         let childEle = document.getElementById('Grid');
@@ -88,6 +89,24 @@ function start() {
         let mainEle = document.getElementsByTagName('main')[0];
         let childEle = document.getElementById('Grid');
         mainEle.insertBefore(textElement, childEle);
+    }
+    else if (algoSelection === "Floyd" && animEnd === true) {
+        clearforStart();
+        try{
+            document.getElementById('distanceText').remove()
+        }
+        catch{}
+        let distance = floydAlgo();
+        let textElement = document.createElement('p');
+        textElement.setAttribute('id', 'distanceText')
+        textElement.style.textAlign = 'center';
+        textElement.style.margin = '0.5rem'
+        textElement.innerHTML = 'The total distance is ' + distance;
+        let mainEle = document.getElementsByTagName('main')[0];
+        let childEle = document.getElementById('Grid');
+        mainEle.insertBefore(textElement, childEle);
+        
+
     }
 }
 function clearforStart() {

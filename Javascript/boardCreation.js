@@ -32,7 +32,7 @@ function createNode (row, column, heuristic, phase) { //returns node
         if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && trigger )
         {
             this.style.backgroundColor = 'black';
-            this.phase = 0;
+            this.setAttribute('phase', 0);
             try{
                 this.classList.remove('visited');
                 this.classList.remove('finalPath');
@@ -98,7 +98,6 @@ export function setNodes () {  //sets start and end nodes.
     nodeList = document.getElementById('Grid').childNodes;
     nodeList[nodeStartId].style.backgroundColor = 'red'; //var changed
     nodeList[nodeStartId].setAttribute('data-node', 'Start'); //var changed
-    console.log(nodeEndId);
     nodeList[nodeEndId].setAttribute('data-node', 'End');
     nodeList[nodeEndId].style.backgroundColor = 'red';
 }
@@ -107,7 +106,7 @@ export function createGrid () {  //appends x axis wise
     grid = document.getElementById('Grid');
     for (var y = 1; y <= gridY; y ++ ){
         for (var x = 1; x<= gridX; x++) {
-            let num = 1;
+            let num = 0;
             if (document.getElementById('weightButton').checked){
                 num = Math.floor(Math.random() * 100);
             }

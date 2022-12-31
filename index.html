@@ -12,12 +12,14 @@
   <body>
     <main>
       <nav>
+        <h1>Pathfinding Visualiser</h1>
         <div class="wrapper">
           <form>
             <label for="algorithm">Choose an algorithm: </label>
             <select name="algorithm" id="algorithm">
               <option value="Dijkstra">Dijkstra's</option>
               <option value="A*">A*</option>
+              <option value="Floyd">Floyd-Warshall</option>
             </select>
           </form>
         </div>
@@ -32,7 +34,7 @@
         </div>
         <div class="wrapper">
           <form>
-            <label for="weightButton">Weight: </label>
+            <label for="weightButton">heuristics: </label>
             <input type="checkbox" value="checked" id="weightButton" />
           </form>
         </div>
