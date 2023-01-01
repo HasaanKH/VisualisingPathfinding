@@ -98,10 +98,10 @@ function createNode (row, column, heuristic, phase) { //returns node
 
 export function setNodes () {  //sets start and end nodes.
     nodeList = document.getElementById('Grid').childNodes;
-    nodeList[nodeStartId].style.backgroundColor = 'red'; //var changed
+    nodeList[nodeStartId].style.backgroundColor = 'rgba(0,255,0,.8)'; //var changed
     nodeList[nodeStartId].setAttribute('data-node', 'Start'); //var changed
     nodeList[nodeEndId].setAttribute('data-node', 'End');
-    nodeList[nodeEndId].style.backgroundColor = 'red';
+    nodeList[nodeEndId].style.backgroundColor = 'rgba(0,255,0,.8)';
 }
 
 export function createGrid () {  //appends x axis wise

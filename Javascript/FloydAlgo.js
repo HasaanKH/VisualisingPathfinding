@@ -131,7 +131,6 @@ function findFP(startN, endN, routeMatrix){
         }
         else {
             finalPath.splice(lowID + 1, 0, intermediateResult[0] );
-            debugger;
         }
     }
 }
