@@ -71,7 +71,7 @@ function visualiseNodes(iterable, callback) {
         }
     } 
     intervalId = setInterval(() => { //solves async problem of final path loading before the end of first anim.
-        let i = iterable.length - 2;
+        let i = iterable.length - 3; //-1 for array, -2 for start and end nodes.
         if(iterable[i].classList.contains('visited')){
             setanimEnd(true);
             callback(finalPath)
