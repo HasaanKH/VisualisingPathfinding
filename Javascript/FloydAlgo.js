@@ -65,29 +65,12 @@ export function floydAlgo() {
     }
 
     //final path output
-    const nodesfromDistanceMat = Array.from(distanceMatrix, x => x[0]);
-    let currentNode = endN; //keeping track of intermediate nodes.
-    while (currentNode !== startN) {
-        for (let i = 0; i < nodesfromDistanceMat.length; i++) {
-            if (currentNode === nodesfromDistanceMat[i]) {
-                finalPath.push(currentNode);
-                let currentNoderow = routeMatrix[i][1];
-                for (let x of currentNoderow) {
-                    if (x[0] === startN) {
-                        if (x[1] !== currentNode){
-                            currentNode = x[1];
-                        }
-                        else {
-                            finalPath.push(currentNode);
-                            currentNode = startN;
-                        }
-                        break;
-                    }
-                }
-            }
-        }
-    }
+
+    findFP(startN, endN, routeMatrix);
+    debugger;
+    
     setanimEnd(false);
+    let nodesfromDistanceMat = Array.from(distanceMatrix, x => x[0]);
     for(let i = 0; i < nodesfromDistanceMat.length; i++) {
         if (nodesfromDistanceMat[i] === startN){
             distances = distanceMatrix[i][1]
@@ -95,8 +78,10 @@ export function floydAlgo() {
             cleanVN (visitNodes, distances);
         }
     }
+    console.log(finalPath);
     visitNodes = Array.from(visitNodes.keys()); //clean this up, only nodes that have non inf dist
     VisualColor(visitNodes, VisualiseFP);
+    debugger;
     return distances.get(endN);
 }
 
@@ -134,4 +119,41 @@ function cleanVN(VN, distanceMap) { //
             VN.delete(key);
         }
     }
+}
+
+
+function findFP(startN, endN, routeMatrix){
+    var lowID = 0;
+    finalPath.push(startN, endN);
+    while(lowID !== finalPath.length - 1) {
+        let intermediateResult = getIntermediateNode(finalPath[lowID], finalPath[lowID + 1], routeMatrix);
+        console.log(intermediateResult);
+        if (!intermediateResult[1]){ //if no intermediate
+            lowID = lowID + 1;
+        }
+        else {
+            finalPath.splice(lowID + 1, 0, intermediateResult[0] );
+            debugger;
+        }
+    }
+}
+
+function getIntermediateNode(node1, node2, routeMatrix) {
+    const nodesFromRouteMat =  Array.from(routeMatrix, x => x[0]);
+    let idx;
+    for (let i = 0; i < nodesFromRouteMat.length; i++) {
+        if(nodesFromRouteMat[i] === node1) {
+            idx = i; //finding index - potentially use map to improve efficiency
+            //finding intermediate node;
+            let routeRow = routeMatrix[i][1];
+            for(let [node, intermediate] of routeRow) {
+                console.log(node === node2);
+                if (node === node2 && node !== node1 && intermediate !== null && intermediate !== node1){ //dodge line
+                    return [intermediate, true];
+                }
+            }
+            return[null, false] //if no intermediate node
+        }
+    }
+
 }

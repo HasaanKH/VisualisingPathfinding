@@ -81,13 +81,15 @@ function createNode (row, column, heuristic, phase) { //returns node
         trigger = true;
         if (this.classList.contains('wallEditing') && animEnd && this.dataset.node !== 'End' && this.dataset.node !== 'Start') {
             this.style.backgroundColor = 'white';
-            this.phase = 1;
+            this.setAttribute('phase', 1);
         }
     })
     node.addEventListener('mouseout', function(){
         if (editSigNodes && this.dataset.node !== 'End' && this.dataset.node !== 'Start' && animEnd) {
             this.classList.remove('potentialSigNode');
-            this.style.background = 'white';
+            if(this.phase == 1){
+                this.style.background = 'white';
+            }
         }  
     })
     node.addEventListener('mouseup', () => {trigger = false;})
