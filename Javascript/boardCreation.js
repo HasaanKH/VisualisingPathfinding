@@ -67,7 +67,7 @@ function createNode (row, column, heuristic, phase) { //returns node
                 this.classList.remove('finalPath');
             }
             catch{}
-            this.style.backgroundColor = 'red';
+            this.style.backgroundColor = 'rgba(0,255,0,.8)';
             this.setAttribute('data-node', nodeOrder);
             if (nodeOrder === 'Start'){
                 nodeStartId = gridX * (row - 1) + column - 1;

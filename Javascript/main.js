@@ -2,6 +2,7 @@ import { dijkstraAlgo, setanimEnd, animEnd } from './DijkstraAlgo.js';
 import { setNodes, createGrid, wallEdit, setClick, setnodeList, nodeList} from './boardCreation.js';
 import { aStarAlgo } from './AstarAlgo.js';
 import { floydAlgo } from './FloydAlgo.js';
+import {bfsAlgo} from './BFSAlgo.js';
 
 
 export var adjList;
@@ -121,6 +122,22 @@ function start() {
         }
         catch{}
         let distance = floydAlgo();
+        if(distance !== Infinity){
+            writeToScreen(distance)
+        }
+        else {
+            writeToScreenFail();
+        }
+        
+
+    }
+    else if (algoSelection === "BFS" && animEnd === true) {
+        clearforStart();
+        try{
+            document.getElementById('distanceText').remove()
+        }
+        catch{}
+        let distance = bfsAlgo();
         if(distance !== Infinity){
             writeToScreen(distance)
         }
