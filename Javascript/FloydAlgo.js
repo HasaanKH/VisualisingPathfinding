@@ -6,7 +6,7 @@ var distances;
 var intervalId;
 var visitNodes; //to preserve the order
 var speed = 5;
-var INF = 10000000;
+var INF = Infinity;
 
 
 export function floydAlgo() {

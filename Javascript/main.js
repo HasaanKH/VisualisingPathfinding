@@ -55,6 +55,26 @@ function adjListBuilder () {
         }
     }
 }
+function writeToScreen (distance){
+    let textElement = document.createElement('p');
+    textElement.setAttribute('id', 'distanceText')
+    textElement.style.textAlign = 'center';
+    textElement.style.margin = '0.2rem'
+    textElement.innerHTML = 'The total distance is ' + distance;
+    let mainEle = document.getElementsByTagName('main')[0];
+    let childEle = document.getElementById('Grid');
+    mainEle.insertBefore(textElement, childEle);
+} 
+function writeToScreenFail() {
+    let textElement = document.createElement('p');
+    textElement.setAttribute('id', 'distanceText')
+    textElement.style.textAlign = 'center';
+    textElement.style.margin = '0.2rem'
+    textElement.innerHTML = 'There is no solution!';
+    let mainEle = document.getElementsByTagName('main')[0];
+    let childEle = document.getElementById('Grid');
+    mainEle.insertBefore(textElement, childEle);
+}
 
 function start() {
     let algoSelection = document.getElementById('algorithm').value;
@@ -64,15 +84,14 @@ function start() {
             document.getElementById('distanceText').remove()
         }
         catch{}
+
         let distance = dijkstraAlgo();
-        let textElement = document.createElement('p');
-        textElement.setAttribute('id', 'distanceText')
-        textElement.style.textAlign = 'center';
-        textElement.style.margin = '0.2rem'
-        textElement.innerHTML = 'The total distance is ' + distance;
-        let mainEle = document.getElementsByTagName('main')[0];
-        let childEle = document.getElementById('Grid');
-        mainEle.insertBefore(textElement, childEle);
+        if(distance !== Infinity){
+            writeToScreen(distance)
+        }
+        else {
+            writeToScreenFail();
+        }
     }
     else if (algoSelection === "A*" && animEnd === true) {
         clearforStart();
@@ -81,14 +100,12 @@ function start() {
         }
         catch{}
         let distance = aStarAlgo();
-        let textElement = document.createElement('p');
-        textElement.setAttribute('id', 'distanceText')
-        textElement.style.textAlign = 'center';
-        textElement.style.margin = '0.5rem'
-        textElement.innerHTML = 'The total distance is ' + distance;
-        let mainEle = document.getElementsByTagName('main')[0];
-        let childEle = document.getElementById('Grid');
-        mainEle.insertBefore(textElement, childEle);
+        if(distance !== Infinity){
+            writeToScreen(distance)
+        }
+        else {
+            writeToScreenFail();
+        }
     }
     else if (algoSelection === "Floyd" && animEnd === true) {
         clearforStart();
@@ -97,14 +114,12 @@ function start() {
         }
         catch{}
         let distance = floydAlgo();
-        let textElement = document.createElement('p');
-        textElement.setAttribute('id', 'distanceText')
-        textElement.style.textAlign = 'center';
-        textElement.style.margin = '0.5rem'
-        textElement.innerHTML = 'The total distance is ' + distance;
-        let mainEle = document.getElementsByTagName('main')[0];
-        let childEle = document.getElementById('Grid');
-        mainEle.insertBefore(textElement, childEle);
+        if(distance !== Infinity){
+            writeToScreen(distance)
+        }
+        else {
+            writeToScreenFail();
+        }
         
 
     }
