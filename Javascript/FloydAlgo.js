@@ -1,6 +1,6 @@
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
-import { adjList} from "./main.js";
-import { animEnd,setanimEnd } from "./DijkstraAlgo.js";
+import { adjList, setRuntime} from "./main.js";
+import { animEnd, setanimEnd } from "./DijkstraAlgo.js";
 var finalPath;
 var distances;
 var intervalId;
@@ -10,6 +10,7 @@ var INF = Infinity;
 
 
 export function floydAlgo() {
+    let runTime = performance.now();
     visitNodes = new Map();
     finalPath = [];
     distances = [];
@@ -64,11 +65,7 @@ export function floydAlgo() {
         }
     }
 
-    //final path output
-
-    findFP(startN, endN, routeMatrix);
-    debugger;
-    
+    findFP(startN, endN, routeMatrix); 
     setanimEnd(false);
     let nodesfromDistanceMat = Array.from(distanceMatrix, x => x[0]);
     for(let i = 0; i < nodesfromDistanceMat.length; i++) {
@@ -81,7 +78,8 @@ export function floydAlgo() {
     console.log(finalPath);
     visitNodes = Array.from(visitNodes.keys()); //clean this up, only nodes that have non inf dist
     VisualColor(visitNodes, VisualiseFP);
-    debugger;
+    let runTimeEnd  = performance.now();
+    setRuntime(Math.floor(runTimeEnd - runTime));
     return distances.get(endN);
 }
 

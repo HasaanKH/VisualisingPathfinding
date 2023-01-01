@@ -1,5 +1,5 @@
 import { MinHeap } from "./MinheapClass.js";
-import { adjList} from "./main.js";
+import { adjList, setRuntime} from "./main.js";
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
 export var animEnd = true; //bool that dictates whether init anim is finished.
 export function setanimEnd(value) {animEnd = value;}
@@ -13,6 +13,7 @@ var distances; //map of node to distance.
 export function dijkstraAlgo() {
     // Create a MinHeap to store the nodes and their corresponding
     // distances from the start node
+    let runTime = performance.now();
     var visitNodes = [];
     distances = new Map();
     var minHeap = new MinHeap();
@@ -65,6 +66,8 @@ export function dijkstraAlgo() {
     finalPath = [];
     animEnd = false;
     VisualColor(visitNodes, FindFP);
+    let runTimeEnd = performance.now();
+    setRuntime(Math.floor(runTimeEnd - runTime));
     return distances.get(document.querySelector('[data-node = "End"]'));
     
 }

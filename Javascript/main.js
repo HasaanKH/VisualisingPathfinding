@@ -5,6 +5,8 @@ import { floydAlgo } from './FloydAlgo.js';
 
 
 export var adjList;
+var runTime;
+export function setRuntime(x){runTime = x;}
 
 var gridComputedStyle = window.getComputedStyle(document.getElementById('Grid'));
 export const gridY = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
@@ -16,20 +18,22 @@ window.refresh = refresh;
 
 
 function refresh() {
-    let childrenNodes = document.getElementById('Grid').childNodes;
-    for (let i = gridX * gridY - 1; i > -1; i--) { //only works in reverse?
-        childrenNodes[i].remove();
+    if (animEnd === true) {
+        let childrenNodes = document.getElementById('Grid').childNodes;
+        for (let i = gridX * gridY - 1; i > -1; i--) { //only works in reverse?
+            childrenNodes[i].remove();
+        }
+        try{
+            document.getElementById('distanceText').remove()
+        }
+        catch{}
+        setanimEnd(true);
+        setClick();
+        createGrid();
+        setNodes();
+        adjListBuilder();
+        setnodeList(document.getElementById('Grid').childNodes)
     }
-    try{
-        document.getElementById('distanceText').remove()
-    }
-    catch{}
-    setanimEnd(true);
-    setClick();
-    createGrid();
-    setNodes();
-    adjListBuilder();
-    setnodeList(document.getElementById('Grid').childNodes)
 }
 
 function adjListBuilder () {
@@ -60,7 +64,8 @@ function writeToScreen (distance){
     textElement.setAttribute('id', 'distanceText')
     textElement.style.textAlign = 'center';
     textElement.style.margin = '0.2rem'
-    textElement.innerHTML = 'The total distance is ' + distance;
+    textElement.innerHTML = 'The total distance is ' + distance + 
+    ', the algorithm took a total of ' + runTime + ' miliseconds';
     let mainEle = document.getElementsByTagName('main')[0];
     let childEle = document.getElementById('Grid');
     mainEle.insertBefore(textElement, childEle);

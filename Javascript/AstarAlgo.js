@@ -1,5 +1,5 @@
 import { MinHeap } from "./MinheapClass.js";
-import { adjList} from "./main.js";
+import { adjList, setRuntime} from "./main.js";
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
 import { animEnd,setanimEnd } from "./DijkstraAlgo.js";
 
@@ -13,6 +13,7 @@ var distances; //map of node to distance.
 export function aStarAlgo() {
     // Create a MinHeap to store the nodes and their corresponding
     // distances from the start node
+    let runTime = performance.now()
     var visitNodes = [];
     distances = new Map();
     var minHeap = new MinHeap();
@@ -68,6 +69,8 @@ export function aStarAlgo() {
     finalPath = [];
     setanimEnd(false);
     VisualColor(visitNodes, FindFP);
+    let runTimeEnd = performance.now();
+    setRuntime(Math.floor(runTimeEnd - runTime));
     return distances.get(document.querySelector('[data-node = "End"]'));
     
 }
