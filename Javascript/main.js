@@ -5,6 +5,8 @@ import { floydAlgo } from './FloydAlgo.js';
 
 
 export var adjList;
+export var precison = 100;
+
 var runTime;
 export function setRuntime(x){runTime = x;}
 
@@ -63,9 +65,9 @@ function writeToScreen (distance){
     let textElement = document.createElement('p');
     textElement.setAttribute('id', 'distanceText')
     textElement.style.textAlign = 'center';
-    textElement.style.margin = '0.2rem'
+    textElement.style.backgroundColor =  'rgb(232, 245, 51)';
     textElement.innerHTML = 'The total distance is ' + distance + 
-    ', the algorithm took a total of ' + runTime + ' miliseconds';
+    ', the algorithm took a total of ' + runTime + ' miliseconds.';
     let mainEle = document.getElementsByTagName('main')[0];
     let childEle = document.getElementById('Grid');
     mainEle.insertBefore(textElement, childEle);

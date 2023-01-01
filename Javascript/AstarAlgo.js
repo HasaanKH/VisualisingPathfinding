@@ -1,5 +1,5 @@
 import { MinHeap } from "./MinheapClass.js";
-import { adjList, setRuntime} from "./main.js";
+import { adjList, precison, setRuntime} from "./main.js";
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
 import { animEnd,setanimEnd } from "./DijkstraAlgo.js";
 
@@ -70,7 +70,7 @@ export function aStarAlgo() {
     setanimEnd(false);
     VisualColor(visitNodes, FindFP);
     let runTimeEnd = performance.now();
-    setRuntime(Math.floor(runTimeEnd - runTime));
+    setRuntime(Math.trunc((runTimeEnd - runTime)*precison)/precison);
     return distances.get(document.querySelector('[data-node = "End"]'));
     
 }

@@ -1,5 +1,5 @@
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
-import { adjList, setRuntime} from "./main.js";
+import { adjList, setRuntime, precison} from "./main.js";
 import { animEnd, setanimEnd } from "./DijkstraAlgo.js";
 var finalPath;
 var distances;
@@ -79,7 +79,7 @@ export function floydAlgo() {
     visitNodes = Array.from(visitNodes.keys()); //clean this up, only nodes that have non inf dist
     VisualColor(visitNodes, VisualiseFP);
     let runTimeEnd  = performance.now();
-    setRuntime(Math.floor(runTimeEnd - runTime));
+    setRuntime(Math.trunc((runTimeEnd - runTime)*precison)/precison);
     return distances.get(endN);
 }
 

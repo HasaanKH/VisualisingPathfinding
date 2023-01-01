@@ -15,8 +15,10 @@
         <h1>Pathfinding Visualiser</h1>
         <div class="wrapper">
           <form>
-            <label for="algorithm">Choose an algorithm: </label>
-            <select name="algorithm" id="algorithm">
+            <label for="algorithm" class="labelAlgo"
+              >Choose an algorithm:
+            </label>
+            <select name="algorithm" id="algorithm" class="btn select">
               <option value="Dijkstra">Dijkstra's</option>
               <option value="A*">A*</option>
               <option value="Floyd">Floyd-Warshall</option>
@@ -24,18 +26,25 @@
           </form>
         </div>
         <div class="wrapper">
-          <button class="startButton" onclick="start()">Start</button>
+          <button class="startButton btn" onclick="start()">Start</button>
         </div>
         <div class="wrapper">
-          <button id="wallButton" onclick="wallEdit()">Create walls</button>
+          <button id="wallButton" class="btn" onclick="wallEdit()">
+            Create walls
+          </button>
         </div>
         <div class="wrapper">
-          <button class="refreshButton" onclick="refresh()">Refresh</button>
+          <button class="refreshButton btn" onclick="refresh()">Refresh</button>
         </div>
         <div class="wrapper">
           <form>
-            <label for="weightButton">heuristics: </label>
-            <input type="checkbox" value="checked" id="weightButton" />
+            <label for="weightButton" class="labelAlgo">heuristics: </label>
+            <input
+              type="checkbox"
+              value="checked"
+              id="weightButton"
+              class="chkBox"
+            />
           </form>
         </div>
       </nav>

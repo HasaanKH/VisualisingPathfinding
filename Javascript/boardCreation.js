@@ -110,7 +110,7 @@ export function createGrid () {  //appends x axis wise
         for (var x = 1; x<= gridX; x++) {
             let num = 0;
             if (document.getElementById('weightButton').checked){
-                num = Math.floor(Math.random() * 100);
+                num = Math.floor(Math.random() * 100); //change implementation possible
             }
             var tempNode = createNode (y, x, num, 1);
             if(document.getElementById('weightButton').checked) {
