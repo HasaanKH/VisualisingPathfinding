@@ -1,10 +1,9 @@
 import { nodeStartId, nodeEndId} from "./boardCreation.js";
-import { adjList, setRuntime, precison} from "./main.js";
+import { adjList, setRuntime, precison, speed} from "./main.js";
 import { animEnd, setanimEnd } from "./DijkstraAlgo.js";
 var finalPath;
 var intervalId;
 var visitNodes; //to preserve the order
-var speed = 5;
 var nodesList;
 
 
