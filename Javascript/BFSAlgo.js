@@ -1,4 +1,4 @@
-import { adjList, precison, setRuntime} from "./main.js";
+import { adjList, precison, setRuntime, speed} from "./main.js";
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
 import { setanimEnd } from "./DijkstraAlgo.js";
 
@@ -6,7 +6,6 @@ var visitedNodes; //dequeued items, pushed here.
 var parentNodes; //holds parent node of each item. {k: node, v: parent}
 var distanceMap; //holds the distance of each node from root node. {k: node, v: distance}
 var finalPath;
-var speed = 5;
 var intervalId;
 
 export function bfsAlgo() {

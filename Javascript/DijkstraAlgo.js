@@ -1,9 +1,8 @@
 import { MinHeap } from "./MinheapClass.js";
-import { adjList, setRuntime, precison} from "./main.js";
+import { adjList, setRuntime, precison, speed} from "./main.js";
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
 export var animEnd = true; //bool that dictates whether init anim is finished.
 export function setanimEnd(value) {animEnd = value;}
-var speed = 5; //slow: 75, medium: 50, fast; 25, developer: 5.
 //these need to be refreshed when, the refresh button is pressed.
 var finalPath;
 var previousNodes;
@@ -47,9 +46,9 @@ export function dijkstraAlgo() {
         for (const [neighbour, weight] of neighbours) { //needs to be fixed.
             // Calculate the new distance to the neighbour
             let newDistance = Infinity;
-            if(neighbour.style.backgroundColor != 'black')
+            if(neighbour.getAttribute('phase') == 1)
             {
-                newDistance = distances.get(min.node) + 1;  //dijkstra is 1.
+                newDistance = min.weight + weight;  
                 if (!visitNodes.includes(neighbour) && newDistance !== Infinity){
                     visitNodes.push(neighbour);
                 }
@@ -57,7 +56,7 @@ export function dijkstraAlgo() {
             // If the new distance is shorter than the current distance,
             // update the distance and the previous node for the neighbour
             if (newDistance < distances.get(neighbour)) {
-                minHeap.update(neighbour, newDistance, min.node) //needs work
+                minHeap.update(neighbour, newDistance, min.node) 
                 distances.set(neighbour, newDistance);
                 previousNodes.set(neighbour, min.node);
             }
@@ -95,6 +94,7 @@ function FindFP (endNode, finalPath, previousNodes, callback) {
         finalPath.push(endNode);
         endNode = previousNodes.get(endNode);
     }
+    console.log(finalPath)
     callback(finalPath)
 }
 

@@ -1,9 +1,8 @@
 import { MinHeap } from "./MinheapClass.js";
-import { adjList, precison, setRuntime} from "./main.js";
+import { adjList, precison, setRuntime, speed} from "./main.js";
 import { nodeStartId, nodeEndId, nodeList} from "./boardCreation.js";
 import { animEnd,setanimEnd } from "./DijkstraAlgo.js";
 
-var speed = 5; //slow: 75, medium: 50, fast; 25, developer: 5.
 //these need to be refreshed when, the refresh button is pressed.
 var finalPath;
 var previousNodes;
@@ -50,7 +49,7 @@ export function aStarAlgo() {
         for (const [neighbour, weight] of neighbours) { //needs to be fixed.
             // Calculate the new distance to the neighbour
             let newDistance = Infinity;
-            if(neighbour.style.backgroundColor != 'black')
+            if(neighbour.getAttribute('phase') == 1)
             {
                 newDistance = distances.get(min.node) + Number(neighbour.getAttribute('heuristic'))+ weight;  //dijkstra is 1.
                 if (!visitNodes.includes(neighbour) && newDistance !== Infinity){

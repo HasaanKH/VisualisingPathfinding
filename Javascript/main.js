@@ -7,6 +7,7 @@ import {bfsAlgo} from './BFSAlgo.js';
 
 export var adjList;
 export var precison = 100;
+export var speed = 3;
 
 var runTime;
 export function setRuntime(x){runTime = x;}
@@ -55,7 +56,7 @@ function adjListBuilder () {
             );
             let neighbourList = [];
             for(let i = 0; i < currentNeighbour.length; i++) {
-               neighbourList.push([currentNeighbour[i], 1])
+               neighbourList.push([currentNeighbour[i], 1]) //change one for random weights, Math.floor(Math.random() * 100)
             }
             adjList.set(currentNode, neighbourList);
             
@@ -158,7 +159,6 @@ function clearforStart() {
     }
     setanimEnd(true);
     setClick();
-    adjListBuilder();
     setnodeList(document.getElementById('Grid').childNodes)
 }
 

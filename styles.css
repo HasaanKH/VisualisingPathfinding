@@ -11,6 +11,7 @@
     --gridCellSizeS: 5px; 
     --gridCellSizeM: 15px; 
     --gridCellSizeL: 25px; 
+    --gridCellSizeXL: 45px;
 }
 
 *.unselectable {
@@ -52,8 +53,8 @@ body{
 
 #Grid { /*currently being edited*/
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--gridCellSizeL), calc(var(--gridCellSizeL) + 10px))); /*(25, 35)*/
-    grid-template-rows: repeat(auto-fill, minmax(var(--gridCellSizeL), calc(var(--gridCellSizeL) + 10px)));
+    grid-template-columns: repeat(auto-fill, minmax(var(--gridCellSizeXL), calc(var(--gridCellSizeXL) + 10px))); /*(25, 35)*/
+    grid-template-rows: repeat(auto-fill, minmax(var(--gridCellSizeXL), calc(var(--gridCellSizeXL) + 10px)));
     grid-row-gap: 2px;
     grid-column-gap: 2px;
     align-content: center;
