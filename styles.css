@@ -48,13 +48,13 @@ button, select, input{
     background-color: var(--complementaryCol);
 }
 body{
-    overflow: hidden;
+    /*overflow: hidden;*/
 }
 
 #Grid { /*currently being edited*/
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--gridCellSizeL), calc(var(--gridCellSizeL) + 10px))); /*(25, 35)*/
-    grid-template-rows: repeat(auto-fill, minmax(var(--gridCellSizeL), calc(var(--gridCellSizeL) + 10px)));
+    grid-template-columns: repeat(auto-fill, minmax(var(--gridCellSizeS), calc(var(--gridCellSizeS) + 10px))); /*(25, 35)*/
+    grid-template-rows: repeat(auto-fill, minmax(var(--gridCellSizeS), calc(var(--gridCellSizeS) + 10px)));
     grid-row-gap: 2px;
     grid-column-gap: 2px;
     align-content: center;
@@ -168,6 +168,7 @@ body{
   appearance: none;
   background-color: var(--primaryCol);
   border: 0;
+  margin: 0.3rem;
   border-radius: 6px;
   box-shadow: rgba(45, 35, 66, .4) 0 2px 4px,rgba(45, 35, 66, .3) 0 7px 13px -3px,rgba(58, 65, 111, .5) 0 -3px 0 inset;
   box-sizing: border-box;
@@ -213,11 +214,79 @@ body{
 }
 
 .select {
-    font-size: 1.4 rem;
     appearance: auto; /*adds drop down*/
 }
 
 .chkBox {
   background-image: radial-gradient(100% 100% at 100% 0, #5adaff 0, #5468ff 100%);
   transform: scale(1.5);
+}
+
+.startButton {
+    font-size: 1.5rem;
+    padding: 1.4rem;
+    font-weight: 600;
+}
+
+.modal {
+    position: fixed;
+    top: 50%;
+    left:50%;
+    transform: translate(-50%, -50%) scale(0);
+    transition: 200ms ease ease-in-out;
+    border: 1px solid black;
+    border-radius: 10px;
+    z-index: 10;
+    background-color: white;
+    width: 500px;
+    max-width: 80vw;
+}
+
+.modal.active {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.modal-header {
+    padding: 10px;
+    border-bottom: 1px solid #252525b9;
+}
+
+.modal-header .title {
+    font-size: 1.5rem;
+    font-weight: 500;
+    text-align: center;
+}
+
+.modal-header .close-button {
+    border: none;
+    outline: none;
+    background: none;
+    font-size: 1.5rem;
+    align-self: flex-start;
+}
+
+.modal-body {
+    padding: 10px;
+    text-align: center;
+}
+
+#overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 8;
+    background-color: rgba(0,0,0, .5);
+    transition: 200ms ease-in-out;
+    pointer-events: none;
+    opacity: 0;
+}
+#overlay.active {
+    opacity: 1;
+    pointer-events: all;
+}
+.modal-footer {
+    display: flex;
+    justify-content: flex-end;
 }

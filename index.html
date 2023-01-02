@@ -25,12 +25,12 @@
           </form>
         </div>
         <div class="wrapper">
-          <button class="startButton btn" onclick="start()">Start</button>
-        </div>
-        <div class="wrapper">
           <button id="wallButton" class="btn" onclick="wallEdit()">
             Create walls
           </button>
+        </div>
+        <div class="wrapper">
+          <button class="startButton btn" onclick="start()">Start</button>
         </div>
         <div class="wrapper">
           <button class="refreshButton btn" onclick="refresh()">Refresh</button>
@@ -54,6 +54,44 @@
         </div>
       </nav>
       <div id="Grid"></div>
+      <div>
+        <div class="modal-intro modal active" data-page>
+          <div class="modal-header">
+            <button class="close-button" data-closeBtn>&times;</button>
+            <div class="title">Introduction to pathfinding Visualiser</div>
+          </div>
+          <div class="modal-body">
+            This is a short tutorial, to teach you how to utilise the
+            pathfinding visualiser.
+            <br />
+            <br /><strong>What is this website?</strong><br /><br />
+            This website is used to show how pathfinding algorithms function and
+            their relative times to run, in the most efficient manner.
+          </div>
+          <div class="modal-footer">
+            <button data-nextBtn class="btn">Next</button>
+          </div>
+        </div>
+        <div class="modal-page2 modal" data-page>
+          <div class="modal-header">
+            <button class="close-button" data-closeBtn>&times;</button>
+            <div class="title">Button usage</div>
+          </div>
+          <div class="modal-body">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
+            quasi, eius doloremque dolorum voluptate nisi aperiam delectus
+            aspernatur deleniti et velit officiis libero amet illo accusantium
+            in blanditiis aliquid eaque? Iusto minima cumque neque molestias,
+            voluptatem itaque repellendus dolor, eius dignissimos alias soluta
+            quos. Debitis sapiente soluta laborum nesciunt laboriosam.
+          </div>
+          <div class="modal-footer">
+            <button data-previousBtn class="btn">Previous</button>
+            <button data-nextBtn class="btn">Next</button>
+          </div>
+        </div>
+      </div>
+      <div id="overlay" class="active"></div>
     </main>
   </body>
 </html>

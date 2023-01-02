@@ -17,6 +17,9 @@ var gridComputedStyle = window.getComputedStyle(document.getElementById('Grid'))
 export const gridY = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
 export const gridX = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
 
+var currentPage = 0;
+var modalPages;
+
 window.wallEdit = wallEdit; //necessary for html onclick events, DO NOT TOUCH!!
 window.start = start;   //necessary for html onclick events, DO NOT TOUCH!!
 window.refresh = refresh;
@@ -179,20 +182,65 @@ function clearforStart() {
 function assignSpeed() {
     let btn = document.getElementById('speedBtn');
     if(btn.value === 'slow') {
-        speed = 30;
+        speed = 20;
     }
     else if (btn.value === 'medium') {
-        speed = 15;
+        speed = 10;
     }
     else {
-        speed = 5;
+        speed = 2;
     }
+}
+function modalManager() {
+    const overlay = document.getElementById('overlay');
+    const closeModalButton = document.querySelectorAll('[data-closeBtn]');
+    const nextModalButton = document.querySelectorAll('[data-nextBtn]');
+    const previousModalButton = document.querySelectorAll('[data-previousBtn]');
+    modalPages = document.querySelectorAll('[data-page]');
+    nextModalButton.forEach(button => {
+        button.addEventListener('click', () =>
+        {
+            closeModal();
+            currentPage ++;
+            openModal();
+        })
+    })
+    previousModalButton.forEach(button => {
+        button.addEventListener('click', () =>
+        {   
+            closeModal();
+            currentPage --;
+            openModal();
+        })
+    })
+    closeModalButton.forEach(button => {
+        button.addEventListener('click', () =>{
+            closeAllModals();
+        } )
+    } )
+    
+}
+function closeModal(){
+    modalPages[currentPage].classList.remove('active')
+}
+
+function openModal() {
+    modalPages[currentPage].classList.add('active');
+}
+
+function closeAllModals() {
+    try {
+        overlay.classList.remove('active');
+        modalPages[currentPage].classList.remove('active')   
+    }
+    catch {}
 }
 
 window.onload = () => {
     createGrid();
     setNodes();
     adjListBuilder();
+    modalManager();
 }
 
 

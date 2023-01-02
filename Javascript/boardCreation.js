@@ -122,7 +122,7 @@ export function createGrid () {  //appends x axis wise
             }
             var tempNode = createNode (y, x, num, 1);
             if(document.getElementById('weightButton').value !== 'none') {
-                tempNode.innerHTML = num;
+                //tempNode.innerHTML = num;
             }
             grid.appendChild(tempNode);
         }
@@ -146,7 +146,7 @@ export function wallEdit() {
 function calcHeuristicLinear(nodeIDY, nodeIDX, endNodeIDY, endNodeIDX) {
     let num;
     let val =  document.getElementById('weightButton').value;
-    val === 'weak'? num = 2:val === 'medium'? num = 4: num = 6;
+    val === 'weak'? num = 2:val === 'medium'? num = 4: num = 10;
     let y = Math.pow(nodeIDY- endNodeIDY, num); //higher the second number the stronger the pull. must be even
     let x = Math.pow(nodeIDX- endNodeIDX, num);
     return (Math.round(Math.sqrt(x + y)));
