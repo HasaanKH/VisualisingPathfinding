@@ -33,7 +33,7 @@ export function dfsAlgo() {
                 distanceMap.set(node[0], distanceMap.get(currentN) + node[1]);
                 break;
             }
-            else if (!stack.includes(node[0]) && distanceMap.get(node[0]) === undefined){
+            else if (!stack.includes(node[0]) && distanceMap.get(node[0]) === undefined && node[0].getAttribute('phase') == 1){
                 parentNodes.set(node[0], currentN);
                 distanceMap.set(node[0], distanceMap.get(currentN) + node[1]);
                 stack.push(node[0]);
@@ -42,7 +42,6 @@ export function dfsAlgo() {
             }
         }
     }
-    console.log(parentNodes); //works
     findFP();
     setanimEnd(false)
     visualiseNodes(visitedNodes, visualiseFP);
@@ -50,8 +49,6 @@ export function dfsAlgo() {
     let runTimeEnd = performance.now();
     setRuntime(Math.trunc((runTimeEnd - runTime)*precison)/precison);
     return distanceMap.get(targetN); // return the distance of the target node from the start node.
-    
-   
 }
 
 function findFP() { //tested
