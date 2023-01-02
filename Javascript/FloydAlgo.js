@@ -66,7 +66,7 @@ export function floydAlgo() {
     let runTimeEnd  = performance.now();
     console.log(visitNodes);
     setRuntime(Math.trunc((runTimeEnd - runTime)*precison)/precison);
-    // return distances.get(endN);
+    return dist[nodesList.indexOf(startN)][nodesList.indexOf(endN)];
 }
 
 function VisualColor(startN,endN, iterable, dist, callback) {
