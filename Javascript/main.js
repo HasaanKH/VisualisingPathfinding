@@ -57,7 +57,7 @@ function adjListBuilder () {
             );
             let neighbourList = [];
             for(let i = 0; i < currentNeighbour.length; i++) {
-               neighbourList.push([currentNeighbour[i], 1]) //change one for random weights, Math.floor(Math.random() * 100)
+               neighbourList.push([currentNeighbour[i], Math.floor(Math.random() * 100)]) //change one for random weights, Math.floor(Math.random() * 100)
             }
             adjList.set(currentNode, neighbourList);
             

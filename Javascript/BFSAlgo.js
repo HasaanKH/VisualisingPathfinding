@@ -54,7 +54,6 @@ export function bfsAlgo() {
     findFP();
     setanimEnd(false)
     visualiseNodes(visitedNodes, visualiseFP);
-    setanimEnd(true);
     let runTimeEnd = performance.now();
     setRuntime(Math.trunc((runTimeEnd - runTime)*precison)/precison);
     return distanceMap.get(targetN); // return the distance of the target node from the start node.
