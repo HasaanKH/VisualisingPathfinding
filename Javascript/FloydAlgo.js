@@ -28,9 +28,13 @@ export function floydAlgo() {
         let neighbourWeights = Array.from(adjList.get(node), x => x[1]);
         for (let j = 0; j < vNum; j++) 
         {
-            if(neighbourNodes.includes(nodesList[j])){ //this does not run
+            if(neighbourNodes.includes(nodesList[j]) && node.getAttribute('phase') == 1){
                 let idx = neighbourNodes.indexOf(nodesList[j]);
                 dist[i][j] = neighbourWeights[idx];
+            }
+            else if (nodesList[j] === node) {
+                dist[i][j] = 0;;
+                predecessor[i][j] = nodesList[j];
             }
             else{
                 dist[i][j] = Infinity;
@@ -42,7 +46,7 @@ export function floydAlgo() {
 
     for (let k = 0; k < vNum; k++) 
     {
-        if (!visitNodes.includes(nodesList[k])){
+        if (!visitNodes.includes(nodesList[k]) && nodesList[k].getAttribute('phase') == 1){
             visitNodes.push(nodesList[k]);
         }
         for (let i = 0; i < vNum; i++) 
@@ -58,13 +62,11 @@ export function floydAlgo() {
         }
     }
 
-
-    findFP(startN, endN, dist, predecessor); 
-    console.log(finalPath);
+    cleanVN(dist)
+    findFP(startN, endN, predecessor, dist); 
     setanimEnd(false);
     VisualColor(startN, endN, visitNodes, dist, VisualiseFP);
     let runTimeEnd  = performance.now();
-    console.log(visitNodes);
     setRuntime(Math.trunc((runTimeEnd - runTime)*precison)/precison);
     return dist[nodesList.indexOf(startN)][nodesList.indexOf(endN)];
 }
@@ -81,7 +83,7 @@ function VisualColor(startN,endN, iterable, dist, callback) {
         }
     } 
     intervalId = setInterval(() => { //solves async problem of final path loading before the end of first anim.
-        let i = iterable.length - 2;
+        let i = iterable.length - 3;
         if(iterable[i].classList.contains('visited')){
             setanimEnd(true);
             callback(finalPath)
@@ -101,10 +103,10 @@ function VisualiseFP(Fp){
 
 
 
-function findFP(startN, endN, distances, predecessor){
+function findFP(startN, endN, predecessor, dist){
     var lowID = 0;
     finalPath.push(startN, endN);
-    while(lowID !== finalPath.length - 1) {
+    while(lowID !== finalPath.length - 1 && dist[nodesList.indexOf(startN)][nodesList.indexOf(endN)] !== Infinity) {
         let intermediateResult = getIntermediateNode(finalPath[lowID], finalPath[lowID + 1], predecessor);
         if (!intermediateResult[1]){ //if no intermediate
             lowID = lowID + 1;
@@ -124,5 +126,18 @@ function getIntermediateNode(node1, node2, predecessor) {
     }
     else {
         return [null, false];
+    }
+}
+
+function cleanVN(dist) {
+    let row = dist[0]; //if the first node cannot reach ele, no other node can.
+    for (let i = 0; i < row.length; i++) {
+        if (row[i] === Infinity) {
+            let index = visitNodes.indexOf(nodesList[i]);
+            debugger;
+            if (index > -1) { // only splice array when item is found
+                visitNodes.splice(index, 1); // 2nd parameter means remove one item only
+            }
+        }
     }
 }
