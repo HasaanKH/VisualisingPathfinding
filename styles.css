@@ -31,7 +31,7 @@ nav{
     display: flex;
     justify-content: space-around;
     align-items: center;
-    background: linear-gradient(90deg, var(--accentCol) 50%, rgba(0,255,0,0));
+    background: var(--primaryCol);
     height: 20vh;
 }
 
@@ -53,8 +53,8 @@ body{
 
 #Grid { /*currently being edited*/
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--gridCellSizeS), calc(var(--gridCellSizeS) + 10px))); /*(25, 35)*/
-    grid-template-rows: repeat(auto-fill, minmax(var(--gridCellSizeS), calc(var(--gridCellSizeS) + 10px)));
+    grid-template-columns: repeat(auto-fill, minmax(var(--gridCellSizeL), calc(var(--gridCellSizeL) + 10px))); /*(25, 35)*/
+    grid-template-rows: repeat(auto-fill, minmax(var(--gridCellSizeL), calc(var(--gridCellSizeL) + 10px)));
     grid-row-gap: 2px;
     grid-column-gap: 2px;
     align-content: center;

@@ -1,4 +1,5 @@
 import { animEnd } from "./DijkstraAlgo.js";
+import {refresh} from "./main.js";
 export var nodeList;
 export var nodeStartId = 0; //choose the location of the start node.
 var editSigNodes = false; //checks whether sig nodes can be moved, true is yes.
@@ -8,6 +9,7 @@ var gridComputedStyle = window.getComputedStyle(document.getElementById('Grid'))
 const gridY = gridComputedStyle.getPropertyValue("grid-template-rows").split(" ").length;
 const gridX = gridComputedStyle.getPropertyValue("grid-template-columns").split(" ").length;
 export var nodeEndId = gridX * gridY -1;
+
 export function setClick() {
     click = 0;
 }
@@ -75,6 +77,9 @@ function createNode (row, column, heuristic, phase) { //returns node
             else {
                 nodeEndId = gridX * (row - 1) + column - 1;
             }
+            if (document.getElementById('weightButton').checked) {
+                refresh()
+            }
         }
     })
     node.addEventListener('mousedown', function(){
@@ -106,11 +111,13 @@ export function setNodes () {  //sets start and end nodes.
 
 export function createGrid () {  //appends x axis wise
     grid = document.getElementById('Grid');
+    let endNodeY = Math.floor(nodeEndId/ gridX) + 1;
+    let endNodeX = nodeEndId % gridX + 1;
     for (var y = 1; y <= gridY; y ++ ){
         for (var x = 1; x<= gridX; x++) {
             let num = 0;
             if (document.getElementById('weightButton').checked){
-                num = Math.floor(Math.random() * 100); //change implementation possible
+                num = calcHeuristicLinear(y, x, endNodeY, endNodeX);
             }
             var tempNode = createNode (y, x, num, 1);
             if(document.getElementById('weightButton').checked) {
@@ -133,4 +140,10 @@ export function wallEdit() {
             tempNode.classList.remove("wallEditing");
         }
     }
+}
+
+function calcHeuristicLinear(nodeIDY, nodeIDX, endNodeIDY, endNodeIDX) {
+    let y = Math.pow(nodeIDY- endNodeIDY, 6);
+    let x = Math.pow(nodeIDX- endNodeIDX, 6);
+    return (Math.round(Math.sqrt(x + y)));
 }

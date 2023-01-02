@@ -15,15 +15,12 @@
         <h1>Pathfinding Visualiser</h1>
         <div class="wrapper">
           <form>
-            <label for="algorithm" class="labelAlgo"
-              >Choose an algorithm:
-            </label>
             <select name="algorithm" id="algorithm" class="btn select">
-              <option value="Dijkstra">Dijkstra's</option>
-              <option value="A*">A*</option>
-              <option value="Floyd">Floyd-Warshall</option>
-              <option value="BFS">BFS</option>
-              <option value="DFS">DFS</option>
+              <option value="Dijkstra">Algorithm: Dijkstra's</option>
+              <option value="A*">Algorithm: A*</option>
+              <option value="Floyd">Algorithm: Floyd-Warshall</option>
+              <option value="BFS">Algorithm: BFS</option>
+              <option value="DFS">Algorithm: DFS</option>
             </select>
           </form>
         </div>
@@ -37,6 +34,13 @@
         </div>
         <div class="wrapper">
           <button class="refreshButton btn" onclick="refresh()">Refresh</button>
+        </div>
+        <div class="wrapper">
+          <select id="speedBtn" class="btn select" onclick="assignSpeed()">
+            <option value="slow">Speed: Slow</option>
+            <option value="medium">Speed: Medium</option>
+            <option value="fast">Speed: Fast</option>
+          </select>
         </div>
         <div class="wrapper">
           <form>

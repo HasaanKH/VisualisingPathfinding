@@ -1,5 +1,5 @@
 import { dijkstraAlgo, setanimEnd, animEnd } from './DijkstraAlgo.js';
-import { setNodes, createGrid, wallEdit, setClick, setnodeList, nodeList} from './boardCreation.js';
+import { setNodes, createGrid, wallEdit, setClick, setnodeList, nodeList, nodeEndId} from './boardCreation.js';
 import { aStarAlgo } from './AstarAlgo.js';
 import { floydAlgo } from './FloydAlgo.js';
 import {bfsAlgo} from './BFSAlgo.js';
@@ -8,7 +8,7 @@ import { dfsAlgo } from './DFSAlgo.js';
 
 export var adjList;
 export var precison = 100;
-export var speed = 3;
+export var speed = 50;
 
 var runTime;
 export function setRuntime(x){runTime = x;}
@@ -20,9 +20,9 @@ export const gridX = gridComputedStyle.getPropertyValue("grid-template-columns")
 window.wallEdit = wallEdit; //necessary for html onclick events, DO NOT TOUCH!!
 window.start = start;   //necessary for html onclick events, DO NOT TOUCH!!
 window.refresh = refresh;
+window.assignSpeed = assignSpeed;
 
-
-function refresh() {
+export function refresh() {
     if (animEnd === true) {
         let childrenNodes = document.getElementById('Grid').childNodes;
         for (let i = gridX * gridY - 1; i > -1; i--) { //only works in reverse?
@@ -140,7 +140,7 @@ function start() {
         }
         catch{}
         let distance = bfsAlgo();
-        if(distance !== Infinity){
+        if(distance !== undefined){
             writeToScreen(distance)
         }
         else {
@@ -155,7 +155,7 @@ function start() {
         }
         catch{}
         let distance = dfsAlgo();
-        if(distance !== Infinity){
+        if(distance !== undefined){
             writeToScreen(distance)
         }
         else {
@@ -176,11 +176,24 @@ function clearforStart() {
     setClick();
     setnodeList(document.getElementById('Grid').childNodes)
 }
+function assignSpeed() {
+    let btn = document.getElementById('speedBtn');
+    if(btn.value === 'slow') {
+        speed = 30;
+    }
+    else if (btn.value === 'medium') {
+        speed = 15;
+    }
+    else {
+        speed = 5;
+    }
+}
 
 window.onload = () => {
     createGrid();
     setNodes();
     adjListBuilder();
 }
+
 
 
