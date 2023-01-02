@@ -77,8 +77,9 @@ function createNode (row, column, heuristic, phase) { //returns node
             else {
                 nodeEndId = gridX * (row - 1) + column - 1;
             }
-            if (document.getElementById('weightButton').checked) {
-                refresh()
+            if (document.getElementById('weightButton').value !== 'none') {
+
+                refresh();
             }
         }
     })
@@ -116,11 +117,11 @@ export function createGrid () {  //appends x axis wise
     for (var y = 1; y <= gridY; y ++ ){
         for (var x = 1; x<= gridX; x++) {
             let num = 0;
-            if (document.getElementById('weightButton').checked){
+            if (document.getElementById('weightButton').value !== 'none'){
                 num = calcHeuristicLinear(y, x, endNodeY, endNodeX);
             }
             var tempNode = createNode (y, x, num, 1);
-            if(document.getElementById('weightButton').checked) {
+            if(document.getElementById('weightButton').value !== 'none') {
                 tempNode.innerHTML = num;
             }
             grid.appendChild(tempNode);
@@ -143,7 +144,10 @@ export function wallEdit() {
 }
 
 function calcHeuristicLinear(nodeIDY, nodeIDX, endNodeIDY, endNodeIDX) {
-    let y = Math.pow(nodeIDY- endNodeIDY, 6);
-    let x = Math.pow(nodeIDX- endNodeIDX, 6);
+    let num;
+    let val =  document.getElementById('weightButton').value;
+    val === 'weak'? num = 2:val === 'medium'? num = 4: num = 6;
+    let y = Math.pow(nodeIDY- endNodeIDY, num); //higher the second number the stronger the pull. must be even
+    let x = Math.pow(nodeIDX- endNodeIDX, num);
     return (Math.round(Math.sqrt(x + y)));
 }
