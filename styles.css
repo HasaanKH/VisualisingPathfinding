@@ -38,6 +38,7 @@ nav{
 h1{
     align-self: center;
     font-size: 1.5rem;
+    color: white;
 }
 
 .wrapper {
@@ -48,13 +49,13 @@ button, select, input{
     background-color: var(--complementaryCol);
 }
 body{
-    /*overflow: hidden;*/
+    overflow: hidden;
 }
 
 #Grid { /*currently being edited*/
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(var(--gridCellSizeS), calc(var(--gridCellSizeS) + 10px))); /*(25, 35)*/
-    grid-template-rows: repeat(auto-fill, minmax(var(--gridCellSizeS), calc(var(--gridCellSizeS) + 10px)));
+    grid-template-columns: repeat(auto-fill, minmax(var(--gridCellSizeM), calc(var(--gridCellSizeM) + 10px))); /*(25, 35)*/
+    grid-template-rows: repeat(auto-fill, minmax(var(--gridCellSizeM), calc(var(--gridCellSizeM) + 10px)));
     grid-row-gap: 2px;
     grid-column-gap: 2px;
     align-content: center;
@@ -238,7 +239,7 @@ body{
     border-radius: 10px;
     z-index: 10;
     background-color: white;
-    width: 500px;
+    width: 700px;
     max-width: 80vw;
 }
 

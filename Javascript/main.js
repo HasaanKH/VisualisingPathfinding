@@ -1,5 +1,5 @@
 import { dijkstraAlgo, setanimEnd, animEnd } from './DijkstraAlgo.js';
-import { setNodes, createGrid, wallEdit, setClick, setnodeList, nodeList, nodeEndId} from './boardCreation.js';
+import { setNodes, createGrid, wallEdit, setClick, setnodeList, nodeList, nodeEndId, editSigNodes} from './boardCreation.js';
 import { aStarAlgo } from './AstarAlgo.js';
 import { floydAlgo } from './FloydAlgo.js';
 import {bfsAlgo} from './BFSAlgo.js';
@@ -60,7 +60,7 @@ function adjListBuilder () {
             );
             let neighbourList = [];
             for(let i = 0; i < currentNeighbour.length; i++) {
-               neighbourList.push([currentNeighbour[i], Math.floor(Math.random() * 100)]) //change one for random weights, Math.floor(Math.random() * 100)
+               neighbourList.push([currentNeighbour[i], 1]) //change one for random weights, Math.floor(Math.random() * 100)
             }
             adjList.set(currentNode, neighbourList);
             
@@ -90,81 +90,82 @@ function writeToScreenFail() {
 }
 
 function start() {
-    let algoSelection = document.getElementById('algorithm').value;
-    if (algoSelection === "Dijkstra" && animEnd === true){
-        clearforStart();
-        try{
-            document.getElementById('distanceText').remove()
+    if (editSigNodes === false) {
+        let algoSelection = document.getElementById('algorithm').value;
+        if (algoSelection === "Dijkstra" && animEnd === true){
+            clearforStart();
+            try{
+                document.getElementById('distanceText').remove()
+            }
+            catch{}
+    
+            let distance = dijkstraAlgo();
+            if(distance !== Infinity){
+                writeToScreen(distance)
+            }
+            else {
+                writeToScreenFail();
+            }
         }
-        catch{}
-
-        let distance = dijkstraAlgo();
-        if(distance !== Infinity){
-            writeToScreen(distance)
+        else if (algoSelection === "A*" && animEnd === true) {
+            clearforStart();
+            try{
+                document.getElementById('distanceText').remove()
+            }
+            catch{}
+            let distance = aStarAlgo();
+            if(distance !== Infinity){
+                writeToScreen(distance)
+            }
+            else {
+                writeToScreenFail();
+            }
         }
-        else {
-            writeToScreenFail();
+        else if (algoSelection === "Floyd" && animEnd === true) {
+            clearforStart();
+            try{
+                document.getElementById('distanceText').remove()
+            }
+            catch{}
+            let distance = floydAlgo();
+            if(distance !== Infinity){
+                writeToScreen(distance)
+            }
+            else {
+                writeToScreenFail();
+            }
+            
+    
         }
-    }
-    else if (algoSelection === "A*" && animEnd === true) {
-        clearforStart();
-        try{
-            document.getElementById('distanceText').remove()
+        else if (algoSelection === "BFS" && animEnd === true) {
+            clearforStart();
+            try{
+                document.getElementById('distanceText').remove()
+            }
+            catch{}
+            let distance = bfsAlgo();
+            if(distance !== undefined){
+                writeToScreen(distance)
+            }
+            else {
+                writeToScreenFail();
+            }
+    
         }
-        catch{}
-        let distance = aStarAlgo();
-        if(distance !== Infinity){
-            writeToScreen(distance)
+        else if (algoSelection === "DFS" && animEnd === true) {
+            clearforStart();
+            try{
+                document.getElementById('distanceText').remove()
+            }
+            catch{}
+            let distance = dfsAlgo();
+            if(distance !== undefined){
+                writeToScreen(distance)
+            }
+            else {
+                writeToScreenFail();
+            }
         }
-        else {
-            writeToScreenFail();
-        }
-    }
-    else if (algoSelection === "Floyd" && animEnd === true) {
-        clearforStart();
-        try{
-            document.getElementById('distanceText').remove()
-        }
-        catch{}
-        let distance = floydAlgo();
-        if(distance !== Infinity){
-            writeToScreen(distance)
-        }
-        else {
-            writeToScreenFail();
-        }
-        
-
-    }
-    else if (algoSelection === "BFS" && animEnd === true) {
-        clearforStart();
-        try{
-            document.getElementById('distanceText').remove()
-        }
-        catch{}
-        let distance = bfsAlgo();
-        if(distance !== undefined){
-            writeToScreen(distance)
-        }
-        else {
-            writeToScreenFail();
-        }
-
-    }
-    else if (algoSelection === "DFS" && animEnd === true) {
-        clearforStart();
-        try{
-            document.getElementById('distanceText').remove()
-        }
-        catch{}
-        let distance = dfsAlgo();
-        if(distance !== undefined){
-            writeToScreen(distance)
-        }
-        else {
-            writeToScreenFail();
-        }
-
     }
 }
 function clearforStart() {

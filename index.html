@@ -58,15 +58,21 @@
         <div class="modal-intro modal active" data-page>
           <div class="modal-header">
             <button class="close-button" data-closeBtn>&times;</button>
-            <div class="title">Introduction to pathfinding Visualiser</div>
+            <div class="title">Introduction to Pathfinding Visualiser</div>
           </div>
           <div class="modal-body">
-            This is a short tutorial, to teach you how to utilise the
-            pathfinding visualiser.
-            <br />
-            <br /><strong>What is this website?</strong><br /><br />
+            <strong>What is this website?</strong><br /><br />
             This website is used to show how pathfinding algorithms function and
-            their relative times to run, in the most efficient manner.
+            their relative times to run, given the most efficient
+            implementation.
+            <br /><br />
+            This is a short tutorial, to teach you how to utilise the
+            pathfinding visualiser aswell as give a short background on each
+            algorithm used.
+            <br /><br />
+            <a href="https://github.com/HasaanKH/VisualisingPathfinding.git"
+              >Click here to check the source code!</a
+            >
           </div>
           <div class="modal-footer">
             <button data-nextBtn class="btn">Next</button>
@@ -75,19 +81,71 @@
         <div class="modal-page2 modal" data-page>
           <div class="modal-header">
             <button class="close-button" data-closeBtn>&times;</button>
-            <div class="title">Button usage</div>
+            <div class="title">Algorithms</div>
           </div>
           <div class="modal-body">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quibusdam
-            quasi, eius doloremque dolorum voluptate nisi aperiam delectus
-            aspernatur deleniti et velit officiis libero amet illo accusantium
-            in blanditiis aliquid eaque? Iusto minima cumque neque molestias,
-            voluptatem itaque repellendus dolor, eius dignissimos alias soluta
-            quos. Debitis sapiente soluta laborum nesciunt laboriosam.
+            <p>
+              Dijkstra Algorithm: An algorithm to find the shortest path between
+              a source node and any other node in the graph. The algorithm has a
+              time complexity of O(E + VlogV) and gurantees the shortest path,
+              only if the weights are >= 0.
+            </p>
+            <br />
+            <p>
+              A* algorithm: Similar to Dijkstra's algorithm, but considers
+              heuristics in order to minimise the number of nodes needed to be
+              searched. The algorithm gurantees the shortest path also in O(E +
+              VlogV) time. Unlike Dijkstra, A* works with negative weights.
+            </p>
+            <br />
+            <p>
+              Floyd-Worshall Algorithm: This algorithm calculates the shortest
+              distance between <strong><i>any 2 nodes.</i></strong> However, it
+              has a much greater time complexity of O(V^3). This algorithm
+              should not be run with large graphs. The algorithm works with
+              negative values, but fails if there are any negative cycles.
+            </p>
+            <br />
+            <p>
+              Breadth-first search: This algorithm finds a path from the source
+              node to the target node, by traversing a tree level by level until
+              it reaches the target node. This algorithm does
+              <strong><i>not gurantee</i></strong> the shortest path. The
+              algorithm has a time complexity of 0(n).
+            </p>
+            <br />
+            Depth-first search: This algorithm behaves similarly to BFS.
+            However, it instead traverses as far down the tree before
+            backtracking until it find the target node. This does
+            <strong><i>not gurantee</i> </strong>the shortest path. The
+            algorithm also has a time complexity of O(n).
           </div>
           <div class="modal-footer">
             <button data-previousBtn class="btn">Previous</button>
             <button data-nextBtn class="btn">Next</button>
+          </div>
+        </div>
+        <div class="modal-intro modal" data-page>
+          <div class="modal-header">
+            <button class="close-button" data-closeBtn>&times;</button>
+            <div class="title">Usage</div>
+          </div>
+          <div class="modal-body">
+            <strong>What is this website?</strong><br /><br />
+            This website is used to show how pathfinding algorithms function and
+            their relative times to run, given the most efficient
+            implementation.
+            <br /><br />
+            This is a short tutorial, to teach you how to utilise the
+            pathfinding visualiser aswell as give a short background on each
+            algorithm used.
+            <br /><br />
+            <a href="https://github.com/HasaanKH/VisualisingPathfinding.git"
+              >Click here to check the source code!</a
+            >
+          </div>
+          <div class="modal-footer">
+            <button data-previousBtn class="btn">Previous</button>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { animEnd } from "./DijkstraAlgo.js";
 import {refresh} from "./main.js";
 export var nodeList;
 export var nodeStartId = 0; //choose the location of the start node.
-var editSigNodes = false; //checks whether sig nodes can be moved, true is yes.
+export var editSigNodes = false; //checks whether sig nodes can be moved, true is yes.
 var nodeOrder; //whether the node is start or end for changing data-node.
 var click = 0; //tracks whether wall editing is active if mod 2 == 1, its active.
 var gridComputedStyle = window.getComputedStyle(document.getElementById('Grid'));
